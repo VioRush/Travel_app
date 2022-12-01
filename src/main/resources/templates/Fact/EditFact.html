@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytowanie ciekawostki</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div class="container text-center">
+        <div>
+            <h3>Edytuj ciekawostkę</h3>
+        </div>
+        <form class="requires-validation" th:action="@{/admin/facts/save/{id}(id=${factId})}" th:object="${fact}" method="post">
+            <div class="m-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Tytuł: </label>
+                    <div class="col-8">
+                        <input th:field="*{title}" class="form-control" required/><span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Treść: </label>
+                    <div class="col-8">
+                        <textarea th:field="*{content}" class="form-control" required/> <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

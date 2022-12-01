@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Wskazówki</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div>
+        <div>
+            <h3 align="center">Wskazówki</h3>
+        </div>
+
+        <a th:href="@{/admin/tips/add}" class="btn btn-success">Dodaj nową wskazówkę</a><hr/>
+
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tytuł</th>
+                <th>Zawartość</th>
+                <th>Kategoria</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="tip: ${Tips}">
+                <td th:text="${tip.id}">ID</td>
+                <td th:text="${tip.title}">Tytuł</td>
+                <td th:text="${tip.content}">Zawartość</td>
+                <td th:text="${tip.category}">Kategoria</td>
+                <td><a th:href="@{${tip.id}}">Więcej...</a></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

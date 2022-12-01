@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Wskazówka</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div>
+        <h1 th:text="${tip.getTitle()}"></h1>
+    </div>
+    <div align="center" class="tab-content bg-transparent">
+        <div id="note-full-container" class="note-has-grid row">
+            <div class="card card-body" id="card">
+                <span class="side-stick"></span>
+                <p class=" font-12 text-muted" th:text="'Kategoria:' + ${tip.getCategory()}"></p>
+                <div>
+                    <p class=" font-12 text-muted" th:text="${tip.getContent()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div>
+        <h3 ><a th:href="@{'/admin/tips/edit/' + ${tip.id}}">Edytuj</a></h3>
+        <h3 ><a th:href="@{'/admin/tips/delete/' + ${tip.id}}">Usuń</a></h3>
+    </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Użytkownicy</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+<div>
+    <div>
+        <h3 align="center">Lista użytkowników</h3>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Nazwa użytkownika</th>
+            <th>Email</th>
+            <th>Imie</th>
+            <th>Nazwisko</th>
+            <th>Wizytówka</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${Users}">
+            <td th:text="${user.id}">ID</td>
+            <td th:text="${user.login}">Login</td>
+            <td th:text="${user.username}">Nazwa użytkownika</td>
+            <td th:text="${user.email}">Email</td>
+            <td th:text="${user.name}">Imię</td>
+            <td th:text="${user.surname}">Nazwisko</td>
+            <td th:text="${user.about}">Wizytówka</td>
+            <td><a th:href="@{'/admin/users/delete/' + ${user.id}}">Usuń</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

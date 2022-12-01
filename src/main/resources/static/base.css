@@ -1,0 +1,282 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Montserrat:wght@500&display=swap")
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    background: #262C38;
+    margin: 0px 0px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.container{
+    margin-left: 0px !important;
+}
+
+.container.center{
+    padding-left: 300px;
+    text-align: left !important;
+    width: 1900px !important;
+}
+
+.div-transform{
+    display:flex;
+    margin-top: 20px;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap:wrap;
+}
+
+.div-transform .center{
+    width:1250px;
+}
+
+.full-size{
+    display:flex;
+    margin-top: 20px;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap:nowrap;
+    width:auto;
+}
+
+form{
+    display:flex;
+}
+
+.card{
+    display:flex;
+    border-radius: 6px !important;
+    padding: 0px 18px;
+    width: 350px;
+    transition: 0.5s easy;
+    overflow: hidden;
+    transform: translate(0);
+}
+
+.card::before{
+    content:"";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    opacity: 0.85;
+}
+
+.card h2{
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #edf0f1
+}
+
+.card-small, .card-medium, .card-white, .fact-card{
+    background-size: cover;
+    transform: scale(1.02);
+    margin-right: 40px;
+}
+
+.card-medium p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-small p{
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-small a{
+    padding: 0px;
+}
+
+.card-small{
+    flex-direction: row !important;
+    flex-wrap: nowrap;
+    width:380px;
+    margin-right: 30px;
+}
+
+.card-medium{
+    width: 350px;
+    height:400px;
+}
+
+.fact-card{
+    width: 400px;
+    margin-top: 30px;
+    background: linear-gradient(225deg, #fff6fe 0%, #cbadd2eb 100%);
+}
+
+.row{
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image_row, .flex-row{
+    display:flex;
+    flex-direction: row;
+    padding:20px 0px 20px 20px;
+    width: 1900px;
+}
+
+flex-row{
+    justify-content: space-between;
+     align-items: center;
+}
+
+.icon {
+    background: none;
+    border: none;
+}
+
+.bi-heart, .bi-heart-fill{
+    font-size: 25px;
+    padding-right: 20px;
+}
+
+.bi-tencent-qq{
+    font-size: 30px;
+    color: red;
+}
+
+.bi-circle, .bi-circle-fill{
+    font-size: 20px;
+    padding: 0px 0px 0px 0px;
+    fill: green !important;
+}
+
+.review{
+    display:flex;
+    flex-direction: row !important;
+    padding-left:16px;
+    justify-content: flex-start;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    align-content: flex-start;
+}
+
+.text-link{
+    padding: 15px 0px 0px 15px;
+}
+
+.card-white h2, .fact-card h2{
+    color: #262C38;
+}
+
+.card-white a{
+    color: #262C38 !important;
+}
+
+.card-small:hover, .card-medium:hover, .card-white:hover{
+    transform: scale(1.11);
+    box-shadow: -7px 4px 28px -3px #262C38;
+}
+
+.card-small:before, .card-medium:before{
+    background: linear-gradient(90deg, #262C38 0%, #56637e 100%)
+}
+
+li, a{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500
+    font-size: 24px;
+    color: #edf0f1 !important;
+    text-decoration:none !important;
+}
+
+.logo{
+    cursor: pointer;
+    padding:0px;
+}
+
+.navigation, .user, .navigationUser{
+    list-style:none;
+}
+
+.navigation li, .user li{
+     display: inline-block;
+     padding: 0px 20px;
+     color: #F6F3EE;
+ }
+
+.navigationUser li{
+     display: inline-block;
+     padding: 0px 30px;
+     color: #F6F3EE;
+ }
+
+ .navigation li a, .user li a, .navigationUser li a{
+     transition: all 0.3s case 0s;
+     color: #F6F3EE;
+ }
+
+ .navigation li a:hover, .user li a:hover{
+     color: #0088a9;
+ }
+
+ .image {
+    border-radius:6px;
+    width: 90px;
+    height: 90px;
+    margin: 0px 10px 0px -20px;
+ }
+
+ .image-medium{
+    width: 350px;
+    height: 300px;
+ }
+
+ .profile_img {
+      border-radius:50%;
+      margin-left:50px;
+       width: 350px;
+          height: 350px;
+   }
+
+ .usernameButton {
+    background: #262C38;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500
+    font-size: 24px;
+    color: #edf0f1;
+    border: none;
+
+ }
+
+ fieldset{
+    width: 1100px;
+    border: 1px solid #d6d6d6;
+    background: #deede3;
+    line-height: 1.6em;
+    align:center;
+    margin-top: 10em;
+    border-radius:5px;
+ }
+
+ legend{
+    font-family: "Montserrat", sans-serif;
+    text-align:left;
+    margin-left:50px;
+    font-size: 28px;
+    font: italic;
+ }
+
+ .label{
+    display:inline-block;
+    float:left;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    padding-right:40px;
+ }
+

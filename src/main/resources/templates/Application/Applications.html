@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Aplikacje</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+<div>
+    <div>
+        <h3 align="center">Aplikacje</h3>
+    </div>
+
+    <a th:href="@{/admin/applications/add}" class="btn btn-success">Dodaj nową aplikację</a><hr/>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nazwa aplikacji</th>
+            <th>Opis</th>
+            <th>Kategoria</th>
+            <th>Miejscowość</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appl: ${applications}">
+            <td th:text="${appl.id}">ID</td>
+            <td th:text="${appl.appName}">Nazwa aplikacji</td>
+            <td th:text="${appl.description}">Opis</td>
+            <td th:text="${appl.category}">Kategoria</td>
+            <td th:text="${appl.destinationDestination}">Miejscowość</td>
+            <td><a th:href="@{${appl.id}}">Więcej...</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

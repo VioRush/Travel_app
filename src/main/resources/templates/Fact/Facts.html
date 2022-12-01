@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciekawostki</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+<div>
+    <div>
+        <h3 align="center">Ciekawostki</h3>
+    </div>
+
+    <a th:href="@{/admin/facts/add}" class="btn btn-success">Dodaj nową ciekawostkę na codzień</a><hr/>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Tytuł</th>
+            <th>Zawartość</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="fact: ${Facts}">
+            <td th:text="${fact.id}">ID</td>
+            <td th:text="${fact.title}">Tytuł</td>
+            <td th:text="${fact.content}">Zawartość</td>
+            <td><a th:href="@{${fact.id}}">Więcej...</a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

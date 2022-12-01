@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Destinations</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <h1>Exploruj!</h1>
+    <a th:href="@{/blog/add}" class="btn btn-success">Dodaj wpis</a><hr/>
+    <div class="container text-center">
+        <div class="div-transform">
+            <div th:each="post:${posts}">
+                <div class="card card-medium">
+                    <a class="text-link" th:href="@{'/posts/' + ${post.getId()}}"><h2 th:text="${post.getTitle()}"></h2></a>
+                </div>
+            </div>
+        </div>
+        <div >
+            <div class="row col-sm-10" >
+                <div class="col-sm-2">
+                    Liczba postów: [[${totalPostNumber}]]
+                </div>
+                <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1,totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/blog/page/' + ${i}}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;&nbsp;
+                    </span>
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage+1}}">Następna strona</a>
+                    <span th:unless="${currentPage < totalPages}">Następna strona</span> &nbsp;&nbsp;
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${totalPages}}">Ostatnia strona</a>
+                    <span th:unless="${currentPage < totalPages}">Ostatnia strona</span> &nbsp;&nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

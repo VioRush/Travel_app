@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Nowa aplikacja</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<header th:replace="Main::Admin_menu">
+</header>
+
+<body>
+    <div class="container text-center">
+        <div>
+            <h3>Dodaj nową aplikację</h3>
+        </div>
+        <form class="requires-validation" th:action="@{/admin/applications/add}" th:object="${appl}" method="post">
+            <div class="m-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Nazwa aplikacji: </label>
+                    <div class="col-8">
+                        <input th:field="*{appName}" class="form-control" required/><span th:if="${#fields.hasErrors('appName')}" th:errors="*{appName}">AppName Error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Opis: </label>
+                    <div class="col-8">
+                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Kategoria: </label>
+                    <div class="col-8">
+                        <select th:field="*{category}" id="categorySelect" class="form-control">
+                            <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Miejscowość: </label>
+                    <div class="col-8">
+                        <select th:field="*{destinationDestination}" id="destinationSelect" class="form-control">
+                            <option th:value="NULL"></option>
+                            <option th:each="destination:${destinations}" th:value="${destination.id}" th:text="|${destination.getTown()}, ${destination.getCountry()}|"></option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Dodaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

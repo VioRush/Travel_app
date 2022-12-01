@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>TravelApp</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<header th:fragment="Admin_menu">
+    <nav>
+        <ul class="navigation" sec:authorize="hasAuthority('ADMIN')">
+            <li><a th:href="@{/}"><h1 class="logo" th:text="TravelApp"/></a></li>
+            <li><a class="bordered-link" th:href="@{/admin/attractions/}" sec:authorize="hasAuthority('ADMIN')">Atrakcje</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/destinations/}" sec:authorize="hasAuthority('ADMIN')">Kierunki świata</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/users/}" sec:authorize="hasAuthority('ADMIN')">Lista użytkowników</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/applications/}" sec:authorize="hasAuthority('ADMIN')">Aplikacje</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/facts/}" sec:authorize="hasAuthority('ADMIN')">Ciekawostki</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/tips/}" sec:authorize="hasAuthority('ADMIN')">Lista wskazówek</a></li>
+            <li><a class="bordered-link">Blog</a></li>
+            <li><a class="bordered-link">Polubione</a></li>
+            <li style="align:right"><ul class="user">
+                <li><div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/users/user/}" method="get">
+                        <h5 class="bi bi-person"><button class="usernameButton" onclick="@{/users/user/}">[[${#request.userPrincipal.principal.fullName}]]</button>
+                        </h5>
+                    </form>
+                </div></li>
+                <li><a class="bordered-link" th:href="@{/login}" sec:authorize="isAuthenticated()==false">Login</a></li>
+                <li><a class="bordered-link" th:href="@{/register}" sec:authorize="isAuthenticated()==false">Rejestracja</a></li>
+                <li><a class="bordered-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj</a></li>
+            </ul></li>
+        </ul>
+
+        <ul class="navigationUser" sec:authorize="hasAuthority('USER') or !isAuthenticated()" >
+            <li><a class="bordered-link" th:href="@{/}"><h1 class="logo">TravelApp</h1></a></li>
+            <li><a class="bordered-link" th:href="@{/admin/destinations/}" sec:authorize="hasAuthority('ADMIN')">Kierunki świata</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/attractions/}" sec:authorize="hasAuthority('ADMIN')">Atrakcje</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/users/}" sec:authorize="hasAuthority('ADMIN')">Lista użytkowników</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/applications/}" sec:authorize="hasAuthority('ADMIN')">Aplikacje</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/facts/}" sec:authorize="hasAuthority('ADMIN')">Ciekawostki</a></li>
+            <li><a class="bordered-link" th:href="@{/admin/tips/}" sec:authorize="hasAuthority('ADMIN')">Lista wskazówek</a></li>
+            <li><a class="bordered-link" th:href="@{/blog/}">Blog</a></li>
+            <li><a class="bordered-link" th:href="@{/liked/}" sec:authorize="isAuthenticated()">Polubione</a></li>
+            <li style="align:right"><ul class="user">
+                <li><div sec:authorize="isAuthenticated()">
+                    <form th:action="@{users/user/}" method="get">
+                        <h5 class="bi bi-person"><button class="usernameButton" onclick="@{users/user/}">[[${#request.userPrincipal.principal.fullName}]]</button>
+                        </h5>
+                    </form>
+                </div></li>
+                <li><a class="bordered-link" th:href="@{/login}" sec:authorize="isAuthenticated()==false">Login</a></li>
+                <li><a class="bordered-link" th:href="@{/register}" sec:authorize="isAuthenticated()==false">Rejestracja</a></li>
+                <li><a class="bordered-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj</a></li>
+            </ul></li>
+        </ul>
+
+    </nav>
+</header>
+
+<body>
+    <div class="container">
+        <div class="flex-row">
+            <div class="div-transform">
+                <div th:each="country:${countries}">
+                    <div class="card card-small">
+                        <div th:each="im:${images}">
+                            <img class="image" th:if="${im.getDestination().getId()} == ${country.getId()}" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
+                        </div>
+                        <div>
+                            <a class="text-link" th:href="@{'/destinations/'+${country.getCountry}}"><h2 th:text="${country.getCountry()}"></h2></a>
+                            <p th:text="${country.getContinent()}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="card fact-card">
+                    <div class="row">
+                        <h2>Ciekawostka na dziś</h2>
+                        <i class="bi bi-tencent-qq"></i>
+                    </div>
+                    <h5 th:text="${fact.getTitle()}"></h5></br>
+                    <h5 th:text="${fact.getContent()}"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Profil użytkownika</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div class="container text-center">
+        <div><h1>Profil użytkownika</h1></div>
+
+
+        <div align="center" class="tab-content bg-transparent">
+            <div id="note-full-container" class="note-has-grid row">
+                <div class="card card-body" id="card">
+                    <span class="side-stick"></span>
+                    <div class="form-group row">
+                        <img th:if="${image != null}" class="profile_img" src="${'/static/' + image.getPath()}" th:src="@{'/'+${image.getPath()}}"/>
+                        <img th:unless="${image != null}" class="profile_img" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
+                        <div class="col-8" align="center" style="margin-top: 60px"><h1 class=" font-12 text-muted" th:text="${user.getUsername()}"></h1></div>
+                        <div class="col-12"><h3 align="right" ><a th:href="@{'/users/edit/' + ${user.id}}">Edytuj</a></h3></div>
+                    </div>
+                    <fieldset>
+                        <legend>Dane osobowe</legend>
+                        <p style="margin-top: 30px">
+                            <div>
+                            <label class="label">Login</label>
+                            <h5 th:text="${user.getLogin()}"></h5><br/>
+                            </div>
+                        <div><label class="label">Imię</label>
+                            <h5 th:text="${user.getName()}"></h5><br/></div>
+                        <div><label class="label">Nazwisko</label>
+                            <h5 th:text="${user.getSurname()}"></h5><br/></div>
+
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Kontakt</legend>
+                        <p style="margin-top: 30px">
+                            <label class="label">Email:</label>
+                        <h5  th:text="${user.getEmail()}"></h5><br/>
+                        </p>
+                    </fieldset>
+                    <fieldset>
+                        <legend>O mnie</legend>
+                        <p style="margin-top: 30px">
+                            <label class="label">O mnie:</label>
+                        <h3 th:text="${user.getAbout()}"></h3><br/>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+</body>
+</html>

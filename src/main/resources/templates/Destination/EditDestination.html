@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Edytowanie kierunku podróży</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div class="container text-center">
+        <div>
+            <h3>Edytuj kierunek podróży</h3>
+        </div>
+        <form class="requires-validation" th:action="@{/admin/destinations/save/{id}(id=${destinationId})}" th:object="${destination}" method="post">
+            <div class="m-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Miejscowość: </label>
+                    <div class="col-8">
+                        <input th:field="*{town}" class="form-control" required/><span th:if="${#fields.hasErrors('town')}" th:errors="*{town}">Town Error</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Kraj: </label>
+                    <div class="col-8">
+                        <textarea th:field="*{country}" class="form-control" required/> <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country Error</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Kontynent: </label>
+                    <div class="col-8">
+                        <textarea th:field="*{continent}" class="form-control"/> <span th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}">Continent Error</span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Opis: </label>
+                    <div class="col-8">
+                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
