@@ -57,7 +57,7 @@ public class UserController {
             im.setPath("user-photos/" + filename);
             im.setUser(user);
             imageService.addImage(im);
-            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/src/main/resources/static/user-photos/", filename, multipartFile);
+            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/user-photos/", filename, multipartFile);
         }
 
         userService.updateUser(id, user);

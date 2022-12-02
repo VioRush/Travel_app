@@ -59,7 +59,7 @@ public class AttractionController {
             im.setPath(attraction.getName() + "/" + filename);
             im.setAttraction(attraction);
             imageService.addImage(im);
-            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/src/main/resources/static/attractions/" + attraction.getName() + "/", filename, multipartFile);
+            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/attractions/" + attraction.getName() + "/", filename, multipartFile);
         }
         return "redirect:/admin/attractions/" + attraction.getId();
     }

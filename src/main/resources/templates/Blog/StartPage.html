@@ -22,10 +22,11 @@
                 </div>
             </div>
         </div>
-        <div >
+        <div>   <!-- <div th:if="${totalPages > 0}"> -->
             <div class="row col-sm-10" >
                 <div class="col-sm-2">
-                    Liczba postów: [[${totalPostNumber}]]
+                    <a th:if="${currentPage > 1}" th:href="@{'/blog/page/' + ${currentPage-1}}"><i style="border: 1px red" class="bi bi-chevron-left">Poprzednia strona</i></a>
+                    <span th:unless="${currentPage > 1}"><i class="bi bi-chevron-left">Poprzednia strona</i></span>
                 </div>
                 <div class="col-sm-1">
                     <span th:each="i: ${#numbers.sequence(1,totalPages)}">
@@ -33,13 +34,9 @@
                         <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp;&nbsp;
                     </span>
                 </div>
-                <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage+1}}">Następna strona</a>
-                    <span th:unless="${currentPage < totalPages}">Następna strona</span> &nbsp;&nbsp;
-                </div>
-                <div class="col-sm-1">
-                    <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${totalPages}}">Ostatnia strona</a>
-                    <span th:unless="${currentPage < totalPages}">Ostatnia strona</span> &nbsp;&nbsp;
+                <div class="col-sm-2">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/blog/page/' + ${currentPage+1}}"><i class="bi bi-chevron-right">Następna strona</i></a>
+                    <span th:unless="${currentPage < totalPages}"><i class="bi bi-chevron-right">Następna strona</i></span> &nbsp;&nbsp;
                 </div>
             </div>
         </div>

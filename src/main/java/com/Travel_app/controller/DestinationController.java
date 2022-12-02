@@ -50,7 +50,7 @@ public class DestinationController {
             im.setPath(dest.getCountry() + "/" + filename);
             im.setDestination(dest);
             imageService.addImage(im);
-            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/src/main/resources/static/destinations/" + dest.getCountry() + "/", filename, multipartFile);
+            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/Dyplom/src/main/resources/static/destinations/" + dest.getCountry() + "/", filename, multipartFile);
         }
         return "redirect:/admin/destinations/" + dest.getId();
     }

@@ -70,7 +70,7 @@ public class BlogController {
                 im.setPath("blog/" + filename);
                 im.setPost(post);
                 imageService.addImage(im);
-                FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/src/main/resources/static/blog/", filename, multipartFile);
+                FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", filename, multipartFile);
             }
         }
         //model.addAttribute("newinformation", information);
