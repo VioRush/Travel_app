@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,4 +38,7 @@ public class BlogService {
         this.postRepository.save(post);
     }
 
+    public List<Post> getPostsByUser(Long id) {
+        return this.postRepository.findAllByUser(id);
+    }
 }

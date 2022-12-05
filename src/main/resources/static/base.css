@@ -280,3 +280,63 @@ li, a{
     padding-right:40px;
  }
 
+textarea{              /*nie rabotaet*/
+    width: 30%;
+    height: 400px;
+}
+
+/*.upload>input{
+    display:none;
+}*/
+
+#file-input{
+display:none;
+}
+
+.upload i{
+    font-size: 45px;
+}
+
+.upload{
+    border: 1px solid #262C38;
+}
+
+/* Список c превью */
+.input-file-list {
+	padding: 10px 0;
+}
+.input-file-list-item {
+	display: inline-block;
+	margin: 0 15px 15px;
+	width: 150px;
+	vertical-align: top;
+	position: relative;
+}
+.input-file-list-item img {
+	width: 150px;
+}
+.input-file-list-name {
+	text-align: center;
+	display: block;
+	font-size: 12px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.input-file-list-remove {
+	color: #fff;
+	text-decoration: none;
+	display: inline-block;
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: 5px;
+	right: 5px;
+	background: #ff0202;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 16px;
+	border-radius: 50%;
+}
+
+

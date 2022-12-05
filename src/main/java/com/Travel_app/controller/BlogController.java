@@ -3,6 +3,7 @@ package com.Travel_app.controller;
 import com.Travel_app.db.model.*;
 import com.Travel_app.service.BlogService;
 import com.Travel_app.service.ImageService;
+import com.Travel_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,8 @@ import java.util.List;
 public class BlogController {
     @Autowired
     BlogService blogService;
+    @Autowired
+    UserService userService;
     @Autowired
     ImageService imageService;
     //ArrayList<MultipartFile> addedImages = new ArrayList<>();
@@ -55,14 +58,15 @@ public class BlogController {
     }
 
     @PostMapping("/add")
-    public String addPost(@Valid @ModelAttribute("post") Post post,@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd, Model model, /*Errors*/ BindingResult result, HttpServletRequest request) throws IOException {
+    public String addPost(@Valid @ModelAttribute("post") Post post,/*Errors*/ BindingResult result,Model model, @RequestParam("upload_images") MultipartFile[] multipartFiles,HttpServletRequest request) throws IOException {  // @ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
             return "Blog/AddPost";
         }
-        blogService.addPost(post);
+        System.out.println(multipartFiles.length);
+        //blogService.addPost(post);
 
-        for(MultipartFile multipartFile: imagesToAdd){
+        /*for(MultipartFile multipartFile: multipartFile){
             String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             if(!filename.isEmpty()){
                 Image im = new Image();
@@ -72,15 +76,35 @@ public class BlogController {
                 imageService.addImage(im);
                 FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", filename, multipartFile);
             }
-        }
+        }*/
         //model.addAttribute("newinformation", information);
 
-        return "Blog/Success";
+        return "redirect:/blog/myPosts".concat("?message=success");// "Blog/MyPosts";
     }
 
-    @PostMapping("/add/addImage")
-    public String addImage(@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,@RequestParam("image") MultipartFile multipartFile, Model model, HttpServletRequest request) throws IOException {
-        imagesToAdd.add(multipartFile);
+    @GetMapping("/myPosts")
+    public String myPosts(@RequestParam(value="message", required = false) String message, Model model, HttpServletRequest request){
+        List<Post> posts = new ArrayList<>();
+        User user = this.userService.findByLogin(request.getUserPrincipal().getName());
+        posts = blogService.getPostsByUser(user.getId());
+        model.addAttribute("posts", posts);
+        model.addAttribute("message", message);
+        return "Blog/MyPosts";
+    }
+
+
+    /*
+    @RequestMapping(value="/addImage")
+    public String addImage(@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) throws IOException {   //@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
+        //imagesToAdd.add(multipartFile);
+        System.out.println("Poluczilos");
         return "Blog/AddPost";
     }
+
+    @RequestMapping("/add/addImage")
+    public String addImage(@RequestParam("image") MultipartFile multipartFile) throws IOException {   //@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
+        //imagesToAdd.add(multipartFile);
+        System.out.println("Poluczilos");
+        return "Blog/AddPost";
+    }*/
 }
