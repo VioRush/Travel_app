@@ -16,6 +16,12 @@ public interface LikedDestinationRepository extends JpaRepository<LikedDestinati
     @Modifying
     @Query("delete from LikedDestination l where l.destination.id = ?1 and l.user.id = ?2")
     void deleteByIds(Long id, Long id1);
-    
 
+    @Query(value = "select *, count(*) c " +
+            "from Liked_Destination ld, Destination d " +
+            "where ld.destination_id = d.destination_id " +
+            "group by d.town " +
+            "order by c desc " +
+            "limit 10", nativeQuery = true)
+    List<LikedDestination> findTopTen();
 }

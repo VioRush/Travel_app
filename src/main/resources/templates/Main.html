@@ -82,6 +82,9 @@
                 </div>
             </div>
             <div>
+
+            </div>
+            <div>
                 <div class="card fact-card">
                     <div class="row">
                         <h2>Ciekawostka na dziś</h2>
@@ -89,6 +92,21 @@
                     </div>
                     <h5 th:text="${fact.getTitle()}"></h5></br>
                     <h5 th:text="${fact.getContent()}"></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <h2>A może chcesz zobaczyć najpopularniejsze miasta?</h2>
+        </div>
+        <div class="div-transform">
+            <div th:each="destination:${top}">
+                <div class="card card-white">
+                    <h3 th:text="${destinationStat.index + 1}"></h3>
+                    <div class="row">
+                        <a class="text-link" th:href="@{'/destinations/' + ${destination.getDestination().getCountry()} + '/details/' + ${destination.getDestination().getId()}}"><h2 th:text="${destination.getDestination().getTown()}"></h2></a>
+                    </div>
                 </div>
             </div>
         </div>

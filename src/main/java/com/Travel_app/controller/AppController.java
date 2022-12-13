@@ -56,21 +56,14 @@ public class AppController {
                     images.add(im.listIterator().next());
                 }
             }
-           /* else if(!countries.contains(dest.getCountry())){
-                countries.add(dest.getCountry());
-                dests.add(dest);
-                ArrayList<Image> im = new ArrayList<Image>();
-                im.addAll(imageService.findByDestination(dest.getId()));
-                //images.add(new ArrayList<Image>(imageService.findByDestination(dest.getId())).get(0));
-                if(!im.isEmpty()) {
-                    images.add(im.listIterator().next());
-                }
-            }*/
         }
+        List<LikedDestination> top = likedDestinationService.findTopTen();
+        System.out.println(top.size());
         List<Fact> facts  = factService.findAll();
         Random rand = new Random();
         model.addAttribute("fact", facts.get(rand.nextInt(facts.size())));
         model.addAttribute("countries", dests);
+        model.addAttribute("top", top);
         model.addAttribute("images", images);
         return "Main";
     }

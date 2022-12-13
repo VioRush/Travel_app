@@ -1,5 +1,6 @@
 package com.Travel_app.service;
 
+import com.Travel_app.db.model.Destination;
 import com.Travel_app.db.model.LikedDestination;
 import com.Travel_app.db.model.User;
 import com.Travel_app.db.repository.LikedDestinationRepository;
@@ -32,5 +33,9 @@ public class LikedDestinationService {
 
     public void deleteLikedDestination(Long dest_id, Long user_id) {
         this.likedDestinationRepository.deleteByIds(dest_id, user_id);
+    }
+
+    public List<LikedDestination> findTopTen() {
+        return this.likedDestinationRepository.findTopTen();
     }
 }
