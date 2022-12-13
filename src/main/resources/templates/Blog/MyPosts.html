@@ -18,7 +18,7 @@
         <div class="div-transform">
             <div th:if="!${posts.isEmpty()}" th:each="post:${posts}">
                 <div class="card card-medium">
-                    <a class="text-link" th:href="@{'/posts/' + ${post.getId()}}"><h2 th:text="${post.getTitle()}"></h2></a>
+                    <a class="text-link" th:href="@{'posts/' + ${post.getId()}}"><h2 th:text="${post.getTitle()}"></h2></a>
                 </div>
             </div>
             <div th:unless="!${posts.isEmpty()}">

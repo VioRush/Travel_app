@@ -17,15 +17,20 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 @RequestMapping("admin/destinations")
 public class DestinationController {
     @Autowired
     DestinationService destinationService;
-
     @Autowired
     ImageService imageService;
+
+    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia", "Azja", "Europa"}));
+
 
     @GetMapping("/")
     public String getAll(Model model) {
@@ -50,7 +55,7 @@ public class DestinationController {
             im.setPath(dest.getCountry() + "/" + filename);
             im.setDestination(dest);
             imageService.addImage(im);
-            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Travel_app/Dyplom/src/main/resources/static/destinations/" + dest.getCountry() + "/", filename, multipartFile);
+            FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/destinations/" + dest.getCountry() + "/", filename, multipartFile);
         }
         return "redirect:/admin/destinations/" + dest.getId();
     }
@@ -58,17 +63,30 @@ public class DestinationController {
     @GetMapping({"/add"})
     public String addNewDestination(Model model){
         model.addAttribute("destination", new Destination());
+        model.addAttribute("continents", continents);
         return "Destination/AddDestination";
     }
 
     @PostMapping("/add")
-    public String addDestination(@Valid @ModelAttribute("destination") Destination destination,  /*Errors*/ BindingResult result, HttpServletRequest request) {
+    public String addDestination(@Valid @ModelAttribute("destination") Destination destination,  /*Errors*/ BindingResult result, @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
-            return "Destination/AddDestination";
+            return "redirect:/admin/destinations/add";
         }
 
         destinationService.addDestination(destination);
+        for(MultipartFile multipartFile: multipartFiles){
+            String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            if(!filename.isEmpty()){
+                int temp = ThreadLocalRandom.current().nextInt(0,1001);
+                Image im = new Image();
+                im.setDescription(destination.getCountry());
+                im.setPath(destination.getCountry() + "/" + temp + filename);
+                im.setDestination(destination);
+                imageService.addImage(im);
+                FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/destinations/" + destination.getCountry() + "/", temp + filename, multipartFile);
+            }
+        }
         return "redirect:/admin/destinations/";
     }
 

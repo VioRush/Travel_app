@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 @RequestMapping("admin/attractions")
@@ -73,13 +74,27 @@ public class AttractionController {
     }
 
     @PostMapping("/add")
-    public String addAttraction(@Valid @ModelAttribute("attraction") Attraction attraction, /*Errors*/ BindingResult result, HttpServletRequest request) {
+    public String addAttraction(@Valid @ModelAttribute("attraction") Attraction attraction, /*Errors*/ BindingResult result,  @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
             return "Attraction/AddAttraction";
         }
         attraction.setReview(0);
         attractionService.addAttraction(attraction);
+
+        for(MultipartFile multipartFile: multipartFiles){
+            String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            if(!filename.isEmpty()){
+                int temp = ThreadLocalRandom.current().nextInt(0,1001);
+                Image im = new Image();
+                im.setDescription(attraction.getName());
+                im.setPath(attraction.getName() + "/" + temp + filename);
+                im.setAttraction(attraction);
+                imageService.addImage(im);
+                FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/attractions/" + attraction.getName() + "/", temp + filename, multipartFile);
+            }
+        }
+
         return "redirect:/admin/attractions/";
     }
 

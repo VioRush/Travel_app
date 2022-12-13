@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {
+    @Query("select i from Image i where i.post.id = ?1")
+    List<Image> findByPost(Long id);
     @Query("select i from Image i where i.user.id = ?1")
     Optional<Image> findByUser(Long id);
 

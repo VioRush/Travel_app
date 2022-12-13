@@ -18,7 +18,7 @@
         <div>
             <h3>Dodaj nową atrakcję</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/attractions/add}" th:object="${attraction}" method="post">
+        <form class="requires-validation" th:action="@{/admin/attractions/add}" th:object="${attraction}" method="post" enctype="multipart/form-data">
             <div class="m-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label">Nazwa: </label>
@@ -60,9 +60,13 @@
                         <textarea th:field="*{price}" class="form-control" required/> <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
                     </div>
                 </div>
+                <div th:replace="Blog/AddPost::uploading">
+                </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Dodaj</button>
                 </div>
+                <script th:replace="Blog/AddPost::images_preview">
+                </script>
             </div>
         </form>
     </div>

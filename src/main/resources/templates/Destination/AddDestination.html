@@ -18,7 +18,7 @@
         <div>
             <h3>Dodaj nowy kierunek podróży</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/destinations/add}" th:object="${destination}" method="post">
+        <form class="requires-validation" th:action="@{/admin/destinations/add}" th:object="${destination}" method="post" enctype="multipart/form-data">
             <div class="m-3">
                 <div class="form-group row">
                     <label class="col-4 col-form-label">Miejscowość: </label>
@@ -37,7 +37,9 @@
                 <div class="form-group row">
                     <label class="col-4 col-form-label">Kontynent: </label>
                     <div class="col-8">
-                        <textarea th:field="*{continent}" class="form-control"/> <span th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}">Continent Error</span>
+                        <select th:field="*{continent}" id="continentSelect" class="form-control">
+                            <option th:each="continent:${continents}" th:value="${continent}" th:text="${continent}"></option>
+                        </select>
                     </div>
                 </div>
 
@@ -47,9 +49,13 @@
                         <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
                     </div>
                 </div>
+                <div th:replace="Blog/AddPost::uploading">
+                </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Dodaj</button>
                 </div>
+                <script th:replace="Blog/AddPost::images_preview">
+                </script>
             </div>
         </form>
     </div>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.getTitle()}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+    <div class="container center">
+        <div  class="tab-content bg-transparent">
+            <span class="side-stick"></span>
+            <h1 th:text="${post.getTitle()}"/><hr>
+            <p th:text="'Opublikowano '+${#temporals.format(post.getPublish(), 'd MMMM yyyy')}+ ' o ' + ${#temporals.format(post.getPublish(), 'HH:mm')}"><p th:text="'Autor: ' + ${post.getPostUser().getUsername()}"></p>
+            <div>
+                <p class="font-12 text-muted" th:text="${post.getBody()}"></p>
+            </div>
+            <br>
+            <div class="image_row">
+                <div th:each="i:${images}">
+                    <div>
+                        <img class="image image-medium" src="${'/static/' + i.getPath()}" th:src="@{'/'+${i.getPath()}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <br>
+            <h2>Komentarze</h2><hr>
+            <div th:unless="!${comments.isEmpty()}">Do tego postu jeszcze nie ma komentarzy, bądż pierwszym! </div>
+            <form sec:authorize="isAuthenticated()==true" th:action="@{/blog/posts/{id}(id=${post.id})}" th:object="${new_comment}" method="post">
+                <div class="m-3">
+                    <div class="form-group row">
+                        <img th:if="${profile_image != null}" class="image" src="${'/static/' + profile_image.getPath()}" th:src="@{'/'+${profile_image.getPath()}}"/>
+                        <img th:unless="${profile_image != null}" class="image" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
+                        <textarea rows="2" cols="100" th:field="*{body}" class="form-control no-border" placeholder="Skomentuj..."/> <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Body Error</span>
+                    </div>
+                    <div align="right">
+                        <button type="submit" class="btn btn-success">Skomentuj</button>
+                    </div>
+                </div>
+            </form>
+            <div th:if="!${comments.isEmpty()}" th:each="comment:${comments}">
+                <div class="card card-comment">
+                    <div class="row">
+                        <div th:each="im:${profile_images}">
+                            <img class="image" th:if="${im.getUser().getId()} == ${comment.getUserUser().getId()}" src="${'/static/' + im.getPath()}" th:src="@{'/' + ${im.getPath()}}">
+                            <img th:unless="${im.getUser().getId()} == ${comment.getUserUser().getId()}" class="image" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
+                        </div>
+                        <div>
+                            <h4 th:text="${comment.getUserUser().getUsername()}"></h4>
+                            <p th:text="${#temporals.format(post.getPublish(), 'dd/MM/yyyy HH:mm')}"></p>
+                        </div>
+                    </div>
+                    <div><br><p th:text="${comment.getBody()}"></p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

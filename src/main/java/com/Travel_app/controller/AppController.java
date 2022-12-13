@@ -161,7 +161,7 @@ public class AppController {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userService.save(user);
-        return "Main";
+        return "redirect:/";
     }
 
 

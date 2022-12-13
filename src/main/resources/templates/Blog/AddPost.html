@@ -13,12 +13,13 @@
 <header th:replace="Main::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center">
+        <br>
         <div>
-            <h3>Podziel się wrażeniami z podróży lub doświadczeniem!</h3>
+            <h2 align="center">Podziel się wrażeniami z podróży lub doświadczeniem!</h2>
         </div>
-        <div>
-            <form class="requires-validation" th:action="@{/blog/add}" th:object="${post}" method="post" enctype="multipart/form-data">
+        <div class="container center">
+            <form align="center" class="requires-validation" th:action="@{/blog/add}" th:object="${post}" method="post" enctype="multipart/form-data">
                 <div class="m-3">
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Tytuł: </label>
@@ -30,12 +31,13 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Treść: </label>
                         <div class="col-8">
-                            <textarea th:field="*{body}" class="form-control"/> <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Content Error</span>
+                            <textarea rows="10" cols="70" th:field="*{body}" class="form-control"/> <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Content Error</span>
                         </div>
                     </div>
-                    <div>
-                        <h4>Dodaj zdjęcia: </h4>
-                        <p>(Opcjonalne)</p></br>
+                    <div th:fragment="uploading">
+                        <br>
+                        <h4 align="left">Dodaj zdjęcia: </h4>
+                        <p align="left">(Opcjonalne)</p></br>
                         <div class="upload input-file-row">
                             <label class="input-file" for="file-input"><i  class="bi bi-images"></i><p>Kliknij aby dodać zdjęcia </p>
                             <input id="file-input" type="file" name="upload_images" multiple/></label>
@@ -45,14 +47,14 @@
                     </div></br>
 
                     <div>
-                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                        <button type="submit" class="btn btn-success">Dodaj</button>
                     </div>
                 </div>
             </form>
         </div>
 
     </div>
-    <script>
+    <script th:fragment="images_preview">
     var dt = new DataTransfer();
 
 $('input[type=file]').on('change', function(){

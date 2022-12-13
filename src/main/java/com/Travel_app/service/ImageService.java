@@ -44,4 +44,8 @@ public class ImageService {
     public List<Image> findByAttraction(Long id) {
         return this.imagies.findByAttraction(id);
     }
+
+    public List<Image> findByPost(Long id) {
+        return this.imagies.findByPost(id);
+    }
 }
