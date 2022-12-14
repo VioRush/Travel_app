@@ -53,4 +53,22 @@ public class BlogService {
     public void addComment(Comment comment) {
         this.commentRepository.save(comment);
     }
+
+    public void updatePost(Long id, Post post) {
+        Post p = postRepository.findById(id).get();
+        p.setTitle(post.getTitle());
+        p.setBody(post.getBody());
+        this.postRepository.save(p);
+    }
+
+    public void deleteCommentsByPost(Long id) {
+        List<Comment> comments = this.commentRepository.findAllByPost(id);
+        for (Comment c: comments){
+            this.commentRepository.delete(c);
+        }
+    }
+
+    public void deletePost(Long id) {
+        this.postRepository.delete((Post)getPostById(id));
+    }
 }

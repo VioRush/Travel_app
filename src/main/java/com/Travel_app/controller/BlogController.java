@@ -136,18 +136,46 @@ public class BlogController {
         return "redirect:/blog/posts/" + id;
     }
 
-    /*
-    @RequestMapping(value="/addImage")
-    public String addImage(@RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) throws IOException {   //@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
-        //imagesToAdd.add(multipartFile);
-        System.out.println("Poluczilos");
-        return "Blog/AddPost";
+    @GetMapping("/posts/edit/{id}")
+    public String editPost(@PathVariable Long id,Model model){
+        model.addAttribute("post", blogService.getPostById(id));
+        model.addAttribute("postId", id);
+        List<Image> images = imageService.findByPost(id);
+        model.addAttribute("images", images);
+        model.addAttribute("toDelete", new Integer[images.size()]);
+        return "Blog/EditPost";
     }
 
-    @RequestMapping("/add/addImage")
-    public String addImage(@RequestParam("image") MultipartFile multipartFile) throws IOException {   //@ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
-        //imagesToAdd.add(multipartFile);
-        System.out.println("Poluczilos");
-        return "Blog/AddPost";
-    }*/
+    @PostMapping("/posts/save/{id}")
+    public String editPost(@PathVariable Long id, @Valid @ModelAttribute("post") Post post,/*Errors*/ BindingResult result,Model model, @RequestParam("upload_images") MultipartFile[] multipartFiles, @RequestParam("toDelete") Long toDelete, HttpServletRequest request) throws IOException {  // @ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
+        if(result.hasErrors()){
+            result.getAllErrors().forEach(el -> System.out.println(el));
+            return "Blog/EditPost";
+        }
+        blogService.updatePost(id, post);
+        System.out.println(toDelete);
+        imageService.deleteImageById(toDelete);
+        for(MultipartFile multipartFile: multipartFiles){
+            String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            if(!filename.isEmpty()){
+                int temp = ThreadLocalRandom.current().nextInt(0,1001);
+                Image im = new Image();
+                im.setDescription("Zdjęcie dołączone do postu");
+                im.setPath("blog/" + temp + filename);
+                im.setPost(post);
+                imageService.addImage(im);
+                FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", temp + filename, multipartFile);
+            }
+        }
+
+        return "redirect:/blog/myPosts";
+    }
+
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable Long id,Model model){
+        blogService.deleteCommentsByPost(id);
+        imageService.deleteImageByPost(id);
+        blogService.deletePost(id);
+        return "redirect:/blog/myPosts";
+    }
 }

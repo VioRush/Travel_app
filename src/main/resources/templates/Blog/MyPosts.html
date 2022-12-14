@@ -13,12 +13,30 @@
 <header th:replace="Main::Admin_menu">
 </header>
 <body>
+    <div class="coloured">
+        <h1>Tymi postami już się podzieliłeś</h1>
+    </div>
     <p class="message" th:if="${message} == 'success'">Udane dodanie</p>
-    <div class="container text-center">
+    <div class="container center">
         <div class="div-transform">
-            <div th:if="!${posts.isEmpty()}" th:each="post:${posts}">
-                <div class="card card-medium">
-                    <a class="text-link" th:href="@{'posts/' + ${post.getId()}}"><h2 th:text="${post.getTitle()}"></h2></a>
+            <a sec:authorize="isAuthenticated()==true" class="dark" th:href="@{/blog/add}"><i class="bi bi-pencil-square"></i> Nowy wpis</a>
+            <div th:if="!${posts.isEmpty()}" >
+                <div class="container">
+                    <div class="div-transform">
+                        <div th:each="post:${posts}">
+                            <div class="card card-white post">
+                                <div class="row">
+                                    <a class="text-link-dark" th:href="@{'posts/' + ${post.getId()}}"><h2 th:text="${post.getTitle()}"></h2></a>
+                                    <div class="row">
+                                        <a class="dark" th:href="@{'posts/edit/' + ${post.getId()}}"><i class="bi bi-pencil"></i>Edytuj</a><br>
+                                        <a class="dark" th:href="@{'posts/delete/' + ${post.getId()}}"><i class="bi bi-trash"></i>Usuń</a>
+                                    </div>
+                                </div>
+                                <p th:text="'Opublikowano '+${#temporals.format(post.getPublish(), 'd MMMM yyyy')}+ ' o ' + ${#temporals.format(post.getPublish(), 'HH:mm')}"></p>
+                                <p th:text="${post.getBody()}"></p>
+                            </div></br>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div th:unless="!${posts.isEmpty()}">

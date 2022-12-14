@@ -136,6 +136,7 @@ form{
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap !important;
+    margin: 10px 0px !important;
 }
 
 /*.button-row{
@@ -205,6 +206,10 @@ flex-row{
     color: #262C38 !important;
 }
 
+.card-white.post{
+    width: 100%;
+}
+
 .card-small:hover, .card-medium:hover, .card-white:hover{
     transform: scale(1.11);
     box-shadow: -7px 4px 28px -3px #262C38;
@@ -267,8 +272,8 @@ li, a{
  .profile_img {
       border-radius:50%;
       margin-left:50px;
-       width: 350px;
-          height: 350px;
+      width: 350px;
+      height: 350px;
    }
 
  .usernameButton {
@@ -394,6 +399,20 @@ input[type="search"]{
 .menu{
     width: 90%;
     margin: 0px 5px 0px 25px !important;
+}
+
+.coloured{
+    width:30%;
+    padding: 0.5rem;
+    background: linear-gradient(225deg, #fff6fe 0%, #cbadd2eb 100%);
+}
+
+.row a{
+    padding-right:0.5rem;
+}
+
+.medium{
+    width:700px !important;
 }
 
 
