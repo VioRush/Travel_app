@@ -15,10 +15,10 @@
 <div class="container center">
     <h1 >Exploruj! Zaczniesz planować swoją podróż jak tylko skończysz czytać.</h1><br>
     <div class="row menu">
-        <form class="form-inline">
+        <form class="form-inline" th:action="@{/blog/search}" method="get">
             <div class="row">
                 <label for="post-search" class="label-in"><i class="bi bi-search"></i></label>
-                <input type="search" id="post-search">
+                <input type="search" id="post-search" name="keyword" th:value="${keyword}">
                 <button type="submit" class="btn btn-success">Wyszukaj</button>
             </div>
         </form>
@@ -34,7 +34,7 @@
                 </div></br>
             </div>
         </div>
-        <div>   <!-- <div th:if="${totalPages > 0}"> -->
+        <div th:if="${totalPages > 0}">
             <hr>
             <div class="row col-sm-10" >
                 <div class="col-sm-2">

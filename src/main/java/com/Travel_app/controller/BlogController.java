@@ -53,6 +53,20 @@ public class BlogController {
         return "Blog/StartPage";
     }
 
+    @GetMapping("/search")
+    public String searchByKeyword(String keyword, Model model){
+        if(keyword != null){
+            System.out.println(keyword);
+            List<Post> posts = blogService.findPostsByKeyword(keyword);
+            System.out.println(posts.size());
+            model.addAttribute("posts", posts);
+            return "Blog/StartPage";
+        }
+        else{
+            return findPostsPaginated(1,model);
+        }
+    }
+
     @GetMapping("/add")
     public String addPost(Model model){
         model.addAttribute("post", new Post());

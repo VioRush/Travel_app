@@ -33,6 +33,10 @@ public class BlogService {
         return this.postRepository.findAll(pageable);
     }
 
+    public List<Post> findPostsByKeyword(String keyword){
+        return this.postRepository.findAllByKeyword(keyword);
+    }
+
     public Object getPostById(Long id) {
         Optional<Post> post=postRepository.findById(id);
         return post.isEmpty()? null:post.get();
