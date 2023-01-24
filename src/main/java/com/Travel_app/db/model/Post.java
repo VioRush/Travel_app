@@ -39,7 +39,7 @@ public class Post {
     private User postUser;
 
     @OneToMany(mappedBy = "post")
-    private Set<Image> images = new LinkedHashSet<>();
+    private Set<File> images = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "postPost")
     private Set<Comment> comments = new LinkedHashSet<>();

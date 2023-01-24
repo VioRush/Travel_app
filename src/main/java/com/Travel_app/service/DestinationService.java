@@ -47,4 +47,8 @@ public class DestinationService {
     public List<Destination> findAllByCountry(String country) {
         return this.destinations.findAllByCountry(country);
     }
+
+    public List<Destination> findDestinationsByKeyword(String keyword) {
+        return this.destinations.findAllByKeyword(keyword);
+    }
 }

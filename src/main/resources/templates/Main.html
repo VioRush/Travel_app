@@ -57,7 +57,6 @@
                 <li><a class="bordered-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj</a></li>
             </ul></li>
         </ul>
-
     </nav>
 </header>
 
@@ -68,7 +67,7 @@
     </div>
     <div class="container">
         <div class="flex-row">
-            <div class="div-transform">
+            <div class="flex-column">
                 <div th:each="country:${countries}">
                     <div class="card card-small">
                         <div th:each="im:${images}">
@@ -82,7 +81,35 @@
                 </div>
             </div>
             <div>
-
+                <form class="form-inline" th:action="@{/search}" method="get">
+                    <div th:replace="Fragments::Search"></div>
+                </form>
+               <div th:if="${#httpServletRequest.requestURI.length() > 1}">
+                   <div th:if="!${attractions.isEmpty() and destinations.isEmpty() and tips.isEmpty()}">
+                       <h2> Wyniki wyszukiwania: </h2><br>
+                   </div>
+                   <div th:if="!${destinations.isEmpty()}">
+                       <h3> Miasta i kraje </h3><hr/>
+                       <div class="card-white" th:each="destination:${destinations}">
+                           <a class="text-link-dark" th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}}"><h2 th:text="${destination.getTown()}"></h2></a>
+                       </div>
+                   </div>
+                   <div th:if="!${attractions.isEmpty()}">
+                       <h3> Atrakcje </h3><hr/>
+                       <div class="card-white" th:each="attraction:${attractions}">
+                           <a class="text-link-dark" th:href="@{'/attractions/details/' + ${attraction.getId()}}"><h2 th:text="${attraction.getName()}"></h2></a>
+                       </div>
+                   </div>
+                   <div th:if="!${tips.isEmpty()}">
+                       <h3> Wskazówki </h3><hr/>
+                       <div class="card-white" th:each="tip:${tips}">
+                           <a class="text-link-dark" th:href="@{'/}"><h2 th:text="${tip.getTitle()}"></h2></a>
+                       </div>
+                   </div>
+                   <div th:unless="!${attractions.isEmpty() and destinations.isEmpty() and tips.isEmpty()}">
+                       <h5>Niestety nie znaleziono żadnych wystąpień. Upewnij się, że wpis nie zawiera błędów.  </h5>
+                   </div>
+               </div>
             </div>
             <div>
                 <div class="card fact-card">
@@ -90,7 +117,7 @@
                         <h2>Ciekawostka na dziś</h2>
                         <i class="bi bi-tencent-qq"></i>
                     </div>
-                    <h5 th:text="${fact.getTitle()}"></h5></br>
+                    <h5 th:text="${fact.getTitle()}"></h5><br/>
                     <h5 th:text="${fact.getContent()}"></h5>
                 </div>
             </div>

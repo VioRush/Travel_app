@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
-@Table(name = "image")
-public class Image {
+@Table(name = "file")
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id", nullable = false)
+    @Column(name = "file_id", nullable = false)
     private Long id;
 
     @NotBlank(message = "Pole musi być uzupełnione")

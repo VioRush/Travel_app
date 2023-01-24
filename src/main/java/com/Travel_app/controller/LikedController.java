@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class LikedController {
     @Autowired
     private LikedAttractionService likedAttractionService;
     @Autowired
-    private ImageService imageService;
+    private FileService fileService;
     @Autowired
     private DestinationService destinationService;
     @Autowired
@@ -32,22 +31,22 @@ public class LikedController {
     @GetMapping("/liked/")
     public String getAll(Model model) {
         List<LikedDestination> likedDestinations = this.likedDestinationService.findAll();
-        ArrayList<Image> images = new ArrayList<Image>();
+        ArrayList<File> images = new ArrayList<File>();
         for (LikedDestination dest: likedDestinations){
             System.out.println(dest.getDestination().getId());
-            ArrayList<Image> im = new ArrayList<Image>();
-            im.addAll(imageService.findByDestination(dest.getDestination().getId()));
+            ArrayList<File> im = new ArrayList<File>();
+            im.addAll(fileService.findByDestination(dest.getDestination().getId()));
             //images.add(new ArrayList<Image>(imageService.findByDestination(dest.getId())).get(0));
             if(!im.isEmpty()) {
                 images.add(im.listIterator().next());
             }
         }
         List<LikedAttraction> likedAttractions = this.likedAttractionService.findAll();
-        ArrayList<Image> attraction_images = new ArrayList<Image>();
+        ArrayList<File> attraction_images = new ArrayList<File>();
         for (LikedAttraction attraction: likedAttractions){
             System.out.println(attraction.getAttraction().getId());
-            ArrayList<Image> im = new ArrayList<Image>();
-            im.addAll(imageService.findByAttraction(attraction.getAttraction().getId()));
+            ArrayList<File> im = new ArrayList<File>();
+            im.addAll(fileService.findByAttraction(attraction.getAttraction().getId()));
             //images.add(new ArrayList<Image>(imageService.findByDestination(dest.getId())).get(0));
             if(!im.isEmpty()) {
                 attraction_images.add(im.listIterator().next());

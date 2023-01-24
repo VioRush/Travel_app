@@ -1,7 +1,6 @@
 package com.Travel_app.service;
 
 import com.Travel_app.db.model.Attraction;
-import com.Travel_app.db.model.Tip;
 import com.Travel_app.db.repository.AttractionRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +19,10 @@ public class AttractionService {
 
     public List<Attraction> findAll(){
         return this.attractions.findAll();
+    }
+
+    public List<Attraction> findAttractionsByKeyword(String keyword){
+        return this.attractions.findAllByKeyword(keyword);
     }
 
     public Object getById(Long id) {

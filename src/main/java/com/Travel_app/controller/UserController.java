@@ -1,9 +1,9 @@
 package com.Travel_app.controller;
 
+import com.Travel_app.db.model.File;
 import com.Travel_app.db.model.FileUploadUtil;
-import com.Travel_app.db.model.Image;
 import com.Travel_app.db.model.User;
-import com.Travel_app.service.ImageService;
+import com.Travel_app.service.FileService;
 import com.Travel_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class UserController {
     UserService userService;
 
     @Autowired
-    ImageService imageService;
+    FileService fileService;
 
     public static String upload_directory = System.getProperty("user.dir");
 
@@ -37,7 +37,7 @@ public class UserController {
         User user = this.userService.findByLogin(request.getUserPrincipal().getName());
         System.out.println(user.getId());
         model.addAttribute("user", user);
-        model.addAttribute("image", this.imageService.findByUser(user.getId()));
+        model.addAttribute("image", this.fileService.findByUser(user.getId()));
         return "User/SingleUser";
     }
 
@@ -52,11 +52,11 @@ public class UserController {
     public String edit(@PathVariable("id") Long id, @ModelAttribute("user") User user, @RequestParam("image") MultipartFile multipartFile, HttpServletRequest request) throws IOException {
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         if(!filename.isEmpty()){
-            Image im = new Image();
+            File im = new File();
             im.setDescription("Zdjęcie profiliowe");
             im.setPath("user-photos/" + filename);
             im.setUser(user);
-            imageService.addImage(im);
+            fileService.addImage(im);
             FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/user-photos/", filename, multipartFile);
         }
 
@@ -67,7 +67,7 @@ public class UserController {
     @GetMapping("/admin/users/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         System.out.println(id);
-        imageService.deleteImage(id);
+        fileService.deleteImage(id);
         userService.deleteUser(id);
         return "redirect:/admin/users/";
     }

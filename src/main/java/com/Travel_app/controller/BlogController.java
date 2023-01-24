@@ -2,7 +2,7 @@ package com.Travel_app.controller;
 
 import com.Travel_app.db.model.*;
 import com.Travel_app.service.BlogService;
-import com.Travel_app.service.ImageService;
+import com.Travel_app.service.FileService;
 import com.Travel_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,7 +29,7 @@ public class BlogController {
     @Autowired
     UserService userService;
     @Autowired
-    ImageService imageService;
+    FileService fileService;
     //ArrayList<MultipartFile> addedImages = new ArrayList<>();
 
     @GetMapping("/")
@@ -56,9 +55,7 @@ public class BlogController {
     @GetMapping("/search")
     public String searchByKeyword(String keyword, Model model){
         if(keyword != null){
-            System.out.println(keyword);
             List<Post> posts = blogService.findPostsByKeyword(keyword);
-            System.out.println(posts.size());
             model.addAttribute("posts", posts);
             return "Blog/StartPage";
         }
@@ -90,11 +87,11 @@ public class BlogController {
             String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             if(!filename.isEmpty()){
                 int temp = ThreadLocalRandom.current().nextInt(0,1001);
-                Image im = new Image();
-                im.setDescription("Zdjęcie dołączone do postu");
-                im.setPath("blog/" + temp + filename);
-                im.setPost(post);
-                imageService.addImage(im);
+                File file = new File();
+                file.setDescription("Plik dołączony do postu");
+                file.setPath("blog/" + temp + filename);
+                file.setPost(post);
+                fileService.addImage(file);
                 FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", temp + filename, multipartFile);
             }
         }
@@ -117,20 +114,20 @@ public class BlogController {
     @GetMapping("/posts/{id}")
     public String getPost(@PathVariable Long id, Model model, HttpServletRequest request){
         List<Comment> comments = blogService.getCommentsByPost(id);
-        List<Image> profile_images = new ArrayList<>();
+        List<File> profile_images = new ArrayList<>();
         System.out.println(request.getUserPrincipal() == null);
         if(request.getUserPrincipal() != null){
             User user = this.userService.findByLogin(request.getUserPrincipal().getName());
-            Image profile_image = (Image)imageService.findByUser(user.getId());
+            File profile_image = (File) fileService.findByUser(user.getId());
             model.addAttribute("profile_image", profile_image);
         }
         for(Comment c: comments){
             //c.getUserUser().
-            profile_images.add((Image)imageService.findByUser(c.getUserUser().getId()));
+            profile_images.add((File) fileService.findByUser(c.getUserUser().getId()));
         }
         model.addAttribute("post", blogService.getPostById(id));
         model.addAttribute("comments", comments);
-        model.addAttribute("images", imageService.findByPost(id));
+        model.addAttribute("images", fileService.findByPost(id));
         model.addAttribute("profile_images", profile_images);
         model.addAttribute("new_comment", new Comment());
         return "Blog/SinglePost";
@@ -154,7 +151,7 @@ public class BlogController {
     public String editPost(@PathVariable Long id,Model model){
         model.addAttribute("post", blogService.getPostById(id));
         model.addAttribute("postId", id);
-        List<Image> images = imageService.findByPost(id);
+        List<File> images = fileService.findByPost(id);
         model.addAttribute("images", images);
         model.addAttribute("toDelete", new Integer[images.size()]);
         return "Blog/EditPost";
@@ -168,16 +165,16 @@ public class BlogController {
         }
         blogService.updatePost(id, post);
         System.out.println(toDelete);
-        imageService.deleteImageById(toDelete);
+        fileService.deleteImageById(toDelete);
         for(MultipartFile multipartFile: multipartFiles){
             String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             if(!filename.isEmpty()){
                 int temp = ThreadLocalRandom.current().nextInt(0,1001);
-                Image im = new Image();
-                im.setDescription("Zdjęcie dołączone do postu");
-                im.setPath("blog/" + temp + filename);
-                im.setPost(post);
-                imageService.addImage(im);
+                File file = new File();
+                file.setDescription("Plik dołączony do postu");
+                file.setPath("blog/" + temp + filename);
+                file.setPost(post);
+                fileService.addImage(file);
                 FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", temp + filename, multipartFile);
             }
         }
@@ -188,7 +185,7 @@ public class BlogController {
     @GetMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable Long id,Model model){
         blogService.deleteCommentsByPost(id);
-        imageService.deleteImageByPost(id);
+        fileService.deleteImageByPost(id);
         blogService.deletePost(id);
         return "redirect:/blog/myPosts";
     }

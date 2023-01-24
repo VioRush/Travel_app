@@ -9,68 +9,49 @@
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container text-center">
-        <div>
-            <h1>Zarejestruj się!</h1>
-        </div>
-        <form th:action="@{/post_register}" th:object="${user}"
-              method="post" style="max-width: 600px; margin: 0 auto;">
-            <div class="m-3">
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Nazwa użytkownika: </label>
-                    <div class="col-8">
-                        <input th:field="*{username}" class="form-control" required /><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Login: </label>
-                    <div class="col-8">
-                        <input th:field="*{login}" class="form-control"/><span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Hasło: </label>
-                    <div class="col-8">
-                        <input type="password" th:field="*{password}" class="form-control"/><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Email: </label>
-                    <div class="col-8">
-                        <input type="email" th:field="*{email}" class="form-control"/><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Imię: </label>
-                    <div class="col-8">
-                        <input th:field="*{name}" class="form-control"/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Nazwisko: </label>
-                    <div class="col-8">
-                        <input th:field="*{surname}" class="form-control" /><span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</span>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">O tobie: </label>
-                    <div class="col-8">
-                        <input th:field="*{about}" class="form-control"/><span th:if="${#fields.hasErrors('about')}" th:errors="*{about}">About Error</span>
-                    </div>
-                </div>
-
-                <div>
-                    <button type="submit" class="modern_button">Zarejestruj się</button>
-                </div>
+    <div class="container center">
+        <div class="card login">
+            <div class="row">
+                <a class="text-link-dark" th:href="@{/login}"><button class="text-button">Logowanie</button></a>
+                <a class="text-link-dark" th:href="@{/register}"><button class="text-button" disabled>Rejestracja</button></a>
             </div>
-        </form>
+            <div>
+                <form class="column" th:action="@{/post_register}" th:object="${user}"
+                      method="post">
+                    <div class="group">
+                        <input placeholder="Nazwa użytkownika" th:field="*{username}" class="form-control" required /><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Login" th:field="*{login}" class="form-control"/><span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Hasło" type="password" th:field="*{password}" class="form-control"/><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Email" type="email" th:field="*{email}" class="form-control"/><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Imię" th:field="*{name}" class="form-control"/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="Nazwisko" th:field="*{surname}" class="form-control" /><span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</span>
+                    </div>
+
+                    <div class="group">
+                        <input placeholder="O tobie..." th:field="*{about}" class="form-control"/><span th:if="${#fields.hasErrors('about')}" th:errors="*{about}">About Error</span>
+                    </div>
+
+                    <div class="group">
+                        <button type="submit">Zarejestruj się</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 </html>

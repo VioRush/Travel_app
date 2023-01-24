@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="row" th:fragment="Search">
+        <label for="post-search" class="label-in"><i class="bi bi-search"></i></label>
+        <input type="search" id="post-search" name="keyword" th:value="${keyword}">
+        <button type="submit" class="btn btn-success">Wyszukaj</button>
+    </div>
+</body>
+</html>

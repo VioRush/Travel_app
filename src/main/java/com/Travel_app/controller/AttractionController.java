@@ -1,12 +1,11 @@
 package com.Travel_app.controller;
 
 import com.Travel_app.db.model.Attraction;
-import com.Travel_app.db.model.Destination;
+import com.Travel_app.db.model.File;
 import com.Travel_app.db.model.FileUploadUtil;
-import com.Travel_app.db.model.Image;
 import com.Travel_app.service.AttractionService;
 import com.Travel_app.service.DestinationService;
-import com.Travel_app.service.ImageService;
+import com.Travel_app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
@@ -33,7 +30,7 @@ public class AttractionController {
     @Autowired
     DestinationService destinationService;
     @Autowired
-    ImageService imageService;
+    FileService fileService;
 
     ArrayList<String> categories = new ArrayList<String>(Arrays.asList(new String[]{"Muzea i wystawy", "Atrakcje wodne", "Natura i przygoda", "Kultura i historia"}));
 
@@ -46,7 +43,7 @@ public class AttractionController {
     @GetMapping({"/{id}"})
     public String getAttraction(@PathVariable Long id, Model model, HttpServletRequest request){
         model.addAttribute("attraction", this.attractionService.getById(id));
-        model.addAttribute("imagies", this.imageService.findByAttraction(id));
+        model.addAttribute("imagies", this.fileService.findByAttraction(id));
         return "Attraction/SingleAttraction";
     }
 
@@ -55,11 +52,11 @@ public class AttractionController {
         Attraction attraction = (Attraction)this.attractionService.getById(id);
         String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         if(!filename.isEmpty()){
-            Image im = new Image();
+            File im = new File();
             im.setDescription(attraction.getName());
             im.setPath(attraction.getName() + "/" + filename);
             im.setAttraction(attraction);
-            imageService.addImage(im);
+            fileService.addImage(im);
             FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/attractions/" + attraction.getName() + "/", filename, multipartFile);
         }
         return "redirect:/admin/attractions/" + attraction.getId();
@@ -86,11 +83,11 @@ public class AttractionController {
             String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             if(!filename.isEmpty()){
                 int temp = ThreadLocalRandom.current().nextInt(0,1001);
-                Image im = new Image();
+                File im = new File();
                 im.setDescription(attraction.getName());
                 im.setPath(attraction.getName() + "/" + temp + filename);
                 im.setAttraction(attraction);
-                imageService.addImage(im);
+                fileService.addImage(im);
                 FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/attractions/" + attraction.getName() + "/", temp + filename, multipartFile);
             }
         }

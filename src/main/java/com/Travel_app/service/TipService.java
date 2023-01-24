@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,6 +19,10 @@ public class TipService {
 
     public Object findAll() {
         return this.tips.findAll();
+    }
+
+    public List<Tip> findTipsByKeyword(String keyword) {
+        return this.tips.findAllByKeyword(keyword);
     }
 
     public Object getById(Long id) {
@@ -41,5 +46,4 @@ public class TipService {
         Tip tip = tips.findById(id).get();
         this.tips.delete(tip);
     }
-
 }

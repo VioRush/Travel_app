@@ -46,7 +46,7 @@ public class Attraction {
     private Destination destinationDestination;
 
     @OneToMany(mappedBy = "attraction")
-    private Set<Image> images = new LinkedHashSet<>();
+    private Set<File> images = new LinkedHashSet<>();
 
     @ManyToMany
     @JoinTable(name = "liked_attraction",
