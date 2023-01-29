@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Rankings</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+<div class="container center">
+    <div class="div-transform">
+        <div class="row">
+            <div class="card" th:each="category:${categories}">
+                <a th:href="@{'/rankings/' + ${category}}"> <button th:text="${category}"></button></a>
+            </div>
+        </div>
+        <div th:each="destination:${top}">
+            <div class="card card-white">
+                <h3 th:text="${destinationStat.index + 1}"></h3>
+                <div class="row">
+                    <a class="text-link" th:href="@{'/destinations/' + ${destination.getDestination().getCountry()} + '/details/' + ${destination.getDestination().getId()}}"><h2 th:text="${destination.getDestination().getTown()}"></h2></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

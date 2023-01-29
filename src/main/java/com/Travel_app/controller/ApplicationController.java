@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Controller
-@RequestMapping("admin/applications")
+//@RequestMapping("admin/applications")
 public class ApplicationController {
 
     @Autowired
@@ -27,20 +27,33 @@ public class ApplicationController {
 
     ArrayList<String> categories = new ArrayList<String>(Arrays.asList(new String[]{"Bilety", "Mapy", "Hotele", "Transport", "Inne"}));
 
-    @GetMapping("/")
+    @GetMapping({"applications/{category}","applications/"})
+    public String getAllApplications(Model model, @PathVariable(required = false) String category) {
+        System.out.println(category);
+        if(category!=null){
+            model.addAttribute("applications", this.applicationService.findAllByCategory(category));
+        }
+        else{
+            model.addAttribute("applications", this.applicationService.findAll());
+        }
+        model.addAttribute("categories", categories);
+        return "Application/AllApplications";
+    }
+
+    @GetMapping("admin/applications/")
     public String getAll(Model model) {
         model.addAttribute("applications", this.applicationService.findAll());
         return "Application/Applications";
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping("admin/applications/{id}")
     public String getApplication(@PathVariable Long id, Model model, HttpServletRequest request){
         model.addAttribute("appl", this.applicationService.getById(id));
         model.addAttribute("applicationId", id);
         return "Application/SingleApplication";
     }
 
-    @GetMapping({"/add"})
+    @GetMapping("admin/applications/add")
     public String addNewApplication(Model model){
         model.addAttribute("appl", new Application());
         model.addAttribute("destinations", this.destinationService.findAll());
@@ -48,7 +61,7 @@ public class ApplicationController {
         return "Application/AddApplication";
     }
 
-    @PostMapping("/add")
+    @PostMapping("admin/applications/add")
     public String addApplication(@Valid @ModelAttribute("appl") Application application, /*Errors*/ BindingResult result, HttpServletRequest request) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
@@ -59,7 +72,7 @@ public class ApplicationController {
         return "redirect:/admin/applications/";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("admin/applications/edit/{id}")
     public String editApplication(@PathVariable("id") Long id, Model model) {
         model.addAttribute("appl", this.applicationService.getById(id));
         model.addAttribute("applicationId", id);
@@ -68,13 +81,13 @@ public class ApplicationController {
         return "Application/EditApplication";
     }
 
-    @PostMapping("/save/{id}")
+    @PostMapping("admin/applications/save/{id}")
     public String edit(@PathVariable("id") Long id, @ModelAttribute("application") Application application) {
         applicationService.updateApplication(id, application);
         return "redirect:/admin/applications/";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("admin/applications/delete/{id}")
     public String deleteApplication(@PathVariable("id") Long id) {
         applicationService.deleteApplication(id);
         return "redirect:/admin/applications/";

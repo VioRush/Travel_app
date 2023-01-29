@@ -40,6 +40,7 @@ public class AppController {
     private TipService tipService;
 
     ArrayList<String> countries = new ArrayList<String>();
+    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia", "Azja", "Europa"}));
 
     @GetMapping("")
     public String viewHomePage(Model model, HttpServletRequest request) {
@@ -186,6 +187,20 @@ public class AppController {
         return "redirect:/";
     }
 
-
+    @GetMapping({"rankings/","rankings/{category}"})
+    public String getRankings(Model model, @PathVariable(required = false) String category){
+        System.out.println(category);
+        List<LikedDestination> top;
+        if(category!=null){
+            top = likedDestinationService.findTopTenByContinent(category);
+        }
+        else{
+            top = likedDestinationService.findTopTen();
+            System.out.println(top.size());
+        }
+        model.addAttribute("top", top);
+        model.addAttribute("categories", continents);
+        return "Rankings";
+    }
 }
 

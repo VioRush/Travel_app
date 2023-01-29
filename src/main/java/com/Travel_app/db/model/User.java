@@ -40,6 +40,9 @@ public class User {
     @Column(name = "about", length = 500)
     private String about;
 
+    @Column(name = "reset_password_token", length = 30)
+    private String resetPasswordToken;
+
     //@OneToMany(mappedBy = "user")
     //private Set<Image> images = new LinkedHashSet<>();
 

@@ -37,12 +37,8 @@
 
         <ul class="navigationUser" sec:authorize="hasAuthority('USER') or !isAuthenticated()" >
             <li><a class="bordered-link" th:href="@{/}"><h1 class="logo">TravelApp</h1></a></li>
-            <li><a class="bordered-link" th:href="@{/admin/destinations/}" sec:authorize="hasAuthority('ADMIN')">Kierunki świata</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/attractions/}" sec:authorize="hasAuthority('ADMIN')">Atrakcje</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/users/}" sec:authorize="hasAuthority('ADMIN')">Lista użytkowników</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/applications/}" sec:authorize="hasAuthority('ADMIN')">Aplikacje</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/facts/}" sec:authorize="hasAuthority('ADMIN')">Ciekawostki</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/tips/}" sec:authorize="hasAuthority('ADMIN')">Lista wskazówek</a></li>
+            <li><a class="bordered-link" th:href="@{/applications/}">Przydatne aplikacje</a></li>
+            <li><a class="bordered-link" th:href="@{/tips/}">Wskazówki</a></li>
             <li><a class="bordered-link" th:href="@{/blog/}">Blog</a></li>
             <li><a class="bordered-link" th:href="@{/liked/}" sec:authorize="isAuthenticated()">Polubione</a></li>
             <li style="align:right"><ul class="user">
@@ -125,7 +121,7 @@
     </div>
     <div>
         <div>
-            <h2>A może chcesz zobaczyć najpopularniejsze miasta?</h2>
+            <h2>A może chcesz zobaczyć najpopularniejsze miasta? <a th:href="@{/rankings/}">Sprawdź rankingi</a></h2>
         </div>
         <div class="div-transform">
             <div th:each="destination:${top}">

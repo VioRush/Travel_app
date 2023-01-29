@@ -46,4 +46,8 @@ public class TipService {
         Tip tip = tips.findById(id).get();
         this.tips.delete(tip);
     }
+
+    public Object findAllByCategory(String category) {
+        return this.tips.findAllByCategory(category);
+    }
 }

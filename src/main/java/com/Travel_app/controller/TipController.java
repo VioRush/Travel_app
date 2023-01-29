@@ -16,33 +16,46 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("admin/tips")
+//@RequestMapping("admin/tips")
 public class TipController {
     @Autowired
     TipService tipService;
 
     ArrayList<String> categories = new ArrayList<String>(Arrays.asList(new String[]{"Przed podróża", "Podczas podróży"}));
 
-    @GetMapping("/")
+    @GetMapping({"tips/","tips/{category}"})
+    public String getAllTips(Model model, @PathVariable(required = false) String category) {
+        System.out.println(category);
+        if(category!=null){
+            model.addAttribute("tips", this.tipService.findAllByCategory(category));
+        }
+        else{
+            model.addAttribute("tips", this.tipService.findAll());
+        }
+        model.addAttribute("categories", categories);
+        return "Tip/AllTips";
+    }
+
+    @GetMapping("admin/tips/")
     public String getAll(Model model) {
         model.addAttribute("Tips", this.tipService.findAll());
         return "Tip/Tips";
     }
 
-    @GetMapping({"/{id}"})
+    @GetMapping({"admin/tips/{id}"})
     public String getTip(@PathVariable Long id, Model model, HttpServletRequest request){
         model.addAttribute("tip", this.tipService.getById(id));
         return "Tip/SingleTip";
     }
 
-    @GetMapping({"/add"})
+    @GetMapping({"admin/tips/add"})
     public String addNewTip(Model model){
         model.addAttribute("tip", new Tip());
         model.addAttribute("categories", categories);
         return "Tip/AddTip";
     }
 
-    @PostMapping("/add")
+    @PostMapping("admin/tips/add")
     public String addInformation(@Valid @ModelAttribute("tip") Tip tip, /*Errors*/ BindingResult result, HttpServletRequest request) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
@@ -55,7 +68,7 @@ public class TipController {
         return "redirect:/admin/tips/";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("admin/tips/edit/{id}")
     public String editInformation(@PathVariable("id") Long id, Model model) {
         model.addAttribute("tip", this.tipService.getById(id));
         model.addAttribute("tipId", id);

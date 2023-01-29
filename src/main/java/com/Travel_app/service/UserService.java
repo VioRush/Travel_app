@@ -55,4 +55,30 @@ public class UserService {
         User user = userRepository.findByLogin(login);
         return user.get();
     }
+
+    public Boolean findByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        if (user != null){
+            return true;
+        }
+        else return false;
+    }
+
+    public void updateResetPasswordToken(String token, String email){
+        User user = userRepository.findByEmail(email);
+        user.setResetPasswordToken(token);
+        userRepository.save(user);
+    }
+
+    public User getByResetPasswordToken(String token){
+        return userRepository.findByResetPasswordToken(token);
+    }
+
+    public void updatePassword(User user, String newPassword){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
+    }
 }

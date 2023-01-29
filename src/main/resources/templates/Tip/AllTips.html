@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Destinations</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<header th:replace="Main::Admin_menu">
+</header>
+<body>
+<div class="container center">
+    <div class="div-transform">
+        <div class="row">
+            <div class="card" th:each="category:${categories}">
+                <a th:href="@{'/tips/' + ${category}}"> <button th:text="${category}"></button></a>
+            </div>
+        </div>
+        <div th:each="tip:${tips}">
+            <div class="card">
+                <h2 th:text="${tip.getTitle()}"></h2>
+                <p th:if="${tip.getCategory != null}" th:text="'Kategoria: ' + ${tip.getCategory()}"></p>
+                <h5 th:text="${tip.getContent()}"></h5>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

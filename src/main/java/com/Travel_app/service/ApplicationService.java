@@ -43,4 +43,8 @@ public class ApplicationService {
         Application application = applications.findById(id).get();
         this.applications.delete(application);
     }
+
+    public Object findAllByCategory(String category) {
+        return this.applications.findAllByCategory(category);
+    }
 }
