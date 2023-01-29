@@ -9,53 +9,8 @@
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
-
-<header th:fragment="Admin_menu">
-    <nav>
-        <ul class="navigation" sec:authorize="hasAuthority('ADMIN')">
-            <li><a th:href="@{/}"><h1 class="logo" th:text="TravelApp"/></a></li>
-            <li><a class="bordered-link" th:href="@{/admin/attractions/}" sec:authorize="hasAuthority('ADMIN')">Atrakcje</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/destinations/}" sec:authorize="hasAuthority('ADMIN')">Kierunki świata</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/users/}" sec:authorize="hasAuthority('ADMIN')">Lista użytkowników</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/applications/}" sec:authorize="hasAuthority('ADMIN')">Aplikacje</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/facts/}" sec:authorize="hasAuthority('ADMIN')">Ciekawostki</a></li>
-            <li><a class="bordered-link" th:href="@{/admin/tips/}" sec:authorize="hasAuthority('ADMIN')">Lista wskazówek</a></li>
-            <li><a class="bordered-link">Blog</a></li>
-            <li><a class="bordered-link">Polubione</a></li>
-            <li style="align:right"><ul class="user">
-                <li><div sec:authorize="isAuthenticated()">
-                    <form th:action="@{/users/user/}" method="get">
-                        <h5 class="bi bi-person"><button class="usernameButton" onclick="@{/users/user/}">[[${#request.userPrincipal.principal.fullName}]]</button>
-                        </h5>
-                    </form>
-                </div></li>
-                <li><a class="bordered-link" th:href="@{/login}" sec:authorize="isAuthenticated()==false">Login</a></li>
-                <li><a class="bordered-link" th:href="@{/register}" sec:authorize="isAuthenticated()==false">Rejestracja</a></li>
-                <li><a class="bordered-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj</a></li>
-            </ul></li>
-        </ul>
-
-        <ul class="navigationUser" sec:authorize="hasAuthority('USER') or !isAuthenticated()" >
-            <li><a class="bordered-link" th:href="@{/}"><h1 class="logo">TravelApp</h1></a></li>
-            <li><a class="bordered-link" th:href="@{/applications/}">Przydatne aplikacje</a></li>
-            <li><a class="bordered-link" th:href="@{/tips/}">Wskazówki</a></li>
-            <li><a class="bordered-link" th:href="@{/blog/}">Blog</a></li>
-            <li><a class="bordered-link" th:href="@{/liked/}" sec:authorize="isAuthenticated()">Polubione</a></li>
-            <li style="align:right"><ul class="user">
-                <li><div sec:authorize="isAuthenticated()">
-                    <form th:action="@{users/user/}" method="get">
-                        <h5 class="bi bi-person"><button class="usernameButton" onclick="@{users/user/}">[[${#request.userPrincipal.principal.fullName}]]</button>
-                        </h5>
-                    </form>
-                </div></li>
-                <li><a class="bordered-link" th:href="@{/login}" sec:authorize="isAuthenticated()==false">Login</a></li>
-                <li><a class="bordered-link" th:href="@{/register}" sec:authorize="isAuthenticated()==false">Rejestracja</a></li>
-                <li><a class="bordered-link" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj</a></li>
-            </ul></li>
-        </ul>
-    </nav>
+<header th:replace="Fragments::Admin_menu">
 </header>
-
 <body>
     <div class="nav_links">
         <a class="bordered-link" th:href="@{/destinations/}">Kraje</a>
