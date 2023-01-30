@@ -16,7 +16,7 @@
     </br>
     <div class="row">
         <h2 style="padding-left:14px;" th:text="${attraction.getName()}"></h2>
-        <button class="icon">
+        <button class="icon" sec:authorize="isAuthenticated()">
             <a th:if="!${liked}" class="bi bi-heart" th:href="@{'/attractions/addToLiked/' + ${attraction.getId()}}"></a>
             <a th:unless="!${liked}" class="bi bi-heart-fill" th:href="@{'/attractions/removeFromLiked/' + ${attraction.getId()}}"></a>
         </button>

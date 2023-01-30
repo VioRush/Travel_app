@@ -40,38 +40,26 @@ public class AppController {
     private TipService tipService;
 
     ArrayList<String> countries = new ArrayList<String>();
-    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia", "Azja", "Europa"}));
+    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia i Oceania", "Azja", "Bliski Wschód", "Europa"}));
 
-    @GetMapping("")
-    public String viewHomePage(Model model, HttpServletRequest request) {
-        List<Destination> destinations = this.destinationService.findAll();
-        countries.clear();
-        System.out.println(countries.isEmpty());
-        ArrayList<Destination> dests = new ArrayList<Destination>();
-        ArrayList<File> images = new ArrayList<File>();
-        for (Destination dest: destinations){
-            if(countries.isEmpty() || !countries.contains(dest.getCountry())){
-                countries.add(dest.getCountry());
-                dests.add(dest);
-                ArrayList<File> im = new ArrayList<File>();
-                im.addAll(fileService.findByDestination(dest.getId()));
-                //images.add(new ArrayList<Image>(imageService.findByDestination(dest.getId())).get(0));
-                if(!im.isEmpty()) {
-                    images.add(im.listIterator().next());
-                }
-            }
+    @GetMapping({"","/selected/{continent}"})
+    public String viewHomePage(Model model,  @PathVariable(required = false) String continent, HttpServletRequest request) {
+        if(continent!=null){
+            model.addAttribute("selected", continent);
+            List<String> countries = destinationService.findCountriesByContinent(continent);
+            System.out.println(countries.size());
+            System.out.println("strany: " + countries.toString());
+            model.addAttribute("countries", countries);
         }
+
         List<LikedDestination> top = likedDestinationService.findTopTen();
         System.out.println(top.size());
         List<Fact> facts  = factService.findAll();
 
-        System.out.println(model.containsAttribute("attractions"));
-
         Random rand = new Random();
         model.addAttribute("fact", facts.get(rand.nextInt(facts.size())));
-        model.addAttribute("countries", dests);
+        model.addAttribute("continents", continents);
         model.addAttribute("top", top);
-        model.addAttribute("images", images);
         return "Main";
     }
 
@@ -86,24 +74,28 @@ public class AppController {
             model.addAttribute("destinations", destinations);
             model.addAttribute("attractions", attractions);
             model.addAttribute("tips", tips);
-            return viewHomePage(model, request);
+            return viewHomePage(model, null, request);
         }
         else{
-            return viewHomePage(model, request);
+            return viewHomePage(model, null, request);
         }
     }
 
     @GetMapping("/destinations/{country}")
     public String getDestinations(@PathVariable String country, Model model, HttpServletRequest request){
         List<Destination> destinations = this.destinationService.findAllByCountry(country);
-        List<LikedDestination> likedDestinations = this.likedDestinationService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
-        ArrayList<Destination> liked = new ArrayList<>();
-        for (LikedDestination l: likedDestinations){
-            liked.add(l.getDestination());
+        System.out.println("ktooo: " + request.getUserPrincipal());
+        if(request.getUserPrincipal() != null){
+            List<LikedDestination> likedDestinations = this.likedDestinationService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
+            ArrayList<Destination> liked = new ArrayList<>();
+            for (LikedDestination l: likedDestinations){
+                liked.add(l.getDestination());
+            }
+            model.addAttribute("liked", liked);
         }
+
         ArrayList<File> images = new ArrayList<File>();
         for (Destination dest: destinations){
-            System.out.println(dest.getId() + "czy liked:" + liked.contains(dest));
             ArrayList<File> im = new ArrayList<File>();
             im.addAll(fileService.findByDestination(dest.getId()));
             //images.add(new ArrayList<Image>(imageService.findByDestination(dest.getId())).get(0));
@@ -111,7 +103,7 @@ public class AppController {
                 images.add(im.listIterator().next());
             }
         }
-        model.addAttribute("liked", liked);
+
         model.addAttribute("destinations", destinations);
         model.addAttribute("images", images);
         return "Destination/AllDestinations";
@@ -132,10 +124,13 @@ public class AppController {
     @GetMapping("/destinations/{country}/details/{id}")
     public String getDestination(@PathVariable("country") String country,@PathVariable("id") Long id, Model model, HttpServletRequest request){
         List<Attraction> attractions = this.attractionService.findByDestination(id);
-        List<LikedAttraction> likedAttractions = this.likedAttractionService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
-        ArrayList<Attraction> liked = new ArrayList<>();
-        for (LikedAttraction l: likedAttractions){
-            liked.add(l.getAttraction());
+        if(request.getUserPrincipal() != null) {
+            List<LikedAttraction> likedAttractions = this.likedAttractionService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
+            ArrayList<Attraction> liked = new ArrayList<>();
+            for (LikedAttraction l : likedAttractions) {
+                liked.add(l.getAttraction());
+            }
+            model.addAttribute("liked", liked);
         }
         ArrayList<File> attractionImages = new ArrayList<File>();
         for (Attraction attraction: attractions){
@@ -149,17 +144,18 @@ public class AppController {
         model.addAttribute("destination", this.destinationService.getById(id));
         model.addAttribute("images", this.fileService.findByDestination(id));
         model.addAttribute("attractions", attractions);
-        model.addAttribute("liked", liked);
         model.addAttribute("attractionsImages", attractionImages);
         return "Destination/Destination";
     }
 
     @GetMapping("/attractions/details/{id}")
     public String getAttraction(@PathVariable("id") Long id, Model model, HttpServletRequest request){
-        LikedAttraction likedAttraction = this.likedAttractionService.findByIds(id,this.userService.findByLogin(request.getUserPrincipal().getName()));
+        if(request.getUserPrincipal() != null) {
+            LikedAttraction likedAttraction = this.likedAttractionService.findByIds(id,this.userService.findByLogin(request.getUserPrincipal().getName()));
+            model.addAttribute("liked", likedAttraction);
+        }
         model.addAttribute("attraction", this.attractionService.getById(id));
         model.addAttribute("images", this.fileService.findByAttraction(id));
-        model.addAttribute("liked", likedAttraction);
         return "Attraction/Attraction";
     }
 

@@ -21,7 +21,7 @@
                     </div>
                     <div class="row">
                         <a class="text-link" th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}}"><h2 th:text="${destination.getTown()}"></h2></a>
-                        <button class="icon">
+                        <button class="icon" sec:authorize="isAuthenticated()">
                             <a th:if="!${liked.contains(destination)}" class="bi bi-heart" th:href="@{'/destinations/addToLiked/' + ${destination.getCountry()} + '/' + ${destination.getId()}}"></a>
                             <a th:unless="!${liked.contains(destination)}" class="bi bi-heart-fill" th:href="@{'/destinations/removeFromLiked/' + ${destination.getCountry()} + '/' + ${destination.getId()}}"></a>
                         </button>

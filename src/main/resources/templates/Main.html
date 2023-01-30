@@ -19,14 +19,19 @@
     <div class="container">
         <div class="flex-row">
             <div class="flex-column">
-                <div th:each="country:${countries}">
+                <div th:each="continent:${continents}">
                     <div class="card card-small">
-                        <div th:each="im:${images}">
-                            <img class="image" th:if="${im.getDestination().getId()} == ${country.getId()}" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
-                        </div>
                         <div>
-                            <a class="text-link" th:href="@{'/destinations/'+${country.getCountry}}"><h2 th:text="${country.getCountry()}"></h2></a>
-                            <p th:text="${country.getContinent()}"></p>
+                            <a th:href="@{'/selected/' + ${continent}}"><h2 th:text="${continent}"></h2></a>
+                        </div>
+                    </div>
+                    <div th:if="${continent == selected}">
+                        <div th:each="country:${countries}">
+                            <div class="card-white card-small">
+                                <div>
+                                    <a th:href="@{'/destinations/' + ${country}}"><h2 th:text="${country}"></h2></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +40,7 @@
                 <form class="form-inline" th:action="@{/search}" method="get">
                     <div th:replace="Fragments::Search"></div>
                 </form>
-               <div th:if="${#httpServletRequest.requestURI.length() > 1}">
+               <div th:if="${#httpServletRequest.servletPath.length() == 7}">
                    <div th:if="!${attractions.isEmpty() and destinations.isEmpty() and tips.isEmpty()}">
                        <h2> Wyniki wyszukiwania: </h2><br>
                    </div>

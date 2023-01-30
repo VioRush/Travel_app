@@ -51,4 +51,8 @@ public class DestinationService {
     public List<Destination> findDestinationsByKeyword(String keyword) {
         return this.destinations.findAllByKeyword(keyword);
     }
+
+    public List<String> findCountriesByContinent(String continent) {
+        return this.destinations.getCountriesByContinent(continent);
+    }
 }

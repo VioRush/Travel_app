@@ -36,7 +36,7 @@
                         </div>
                         <div class="row">
                             <a class="text-link" th:href="@{'/attractions/details/' + ${attraction.getId()}}"><h2 th:text="${attraction.getName()}"></h2></a>
-                            <button class="icon">
+                            <button class="icon" sec:authorize="isAuthenticated()">
                                 <a th:if="!${liked.contains(attraction)}" class="bi bi-heart" th:href="@{'/attractions/addToLiked/' + ${attraction.getId()}}"></a>
                                 <a th:unless="!${liked.contains(attraction)}" class="bi bi-heart-fill" th:href="@{'/attractions/removeFromLiked/' + ${attraction.getId()}}"></a>
                             </button>
