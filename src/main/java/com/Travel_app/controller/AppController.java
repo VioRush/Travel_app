@@ -41,6 +41,7 @@ public class AppController {
 
     ArrayList<String> countries = new ArrayList<String>();
     ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia i Oceania", "Azja", "Bliski Wschód", "Europa"}));
+    ArrayList<String> categories = new ArrayList<String>(Arrays.asList(new String[]{"Muzea i wystawy", "Atrakcje wodne", "Natura i przygoda", "Kultura i historia"}));
 
     @GetMapping({"","/selected/{continent}"})
     public String viewHomePage(Model model,  @PathVariable(required = false) String continent, HttpServletRequest request) {
@@ -117,13 +118,19 @@ public class AppController {
         liked.setDestination(dest);
         liked.setUser(user);
         likedDestinationService.addLikedDestination(liked);
-        System.out.println("Dodano!");
         return "redirect:/destinations/{country}";
     }
 
-    @GetMapping("/destinations/{country}/details/{id}")
-    public String getDestination(@PathVariable("country") String country,@PathVariable("id") Long id, Model model, HttpServletRequest request){
-        List<Attraction> attractions = this.attractionService.findByDestination(id);
+    @GetMapping({"/destinations/{country}/details/{id}","/destinations/{country}/details/{id}/{category}"})
+    public String getDestination(@PathVariable("country") String country,@PathVariable("id") Long id, @PathVariable(value = "category", required = false) String category, Model model, HttpServletRequest request){
+        List<Attraction> attractions;
+        if(category !=null){
+             attractions = this.attractionService.findByDestinationAndCategory(id, category);
+             model.addAttribute("selectedCategory", category);
+        }
+        else{
+            attractions = this.attractionService.findByDestination(id);
+        }
         if(request.getUserPrincipal() != null) {
             List<LikedAttraction> likedAttractions = this.likedAttractionService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
             ArrayList<Attraction> liked = new ArrayList<>();
@@ -143,6 +150,7 @@ public class AppController {
         }
         model.addAttribute("destination", this.destinationService.getById(id));
         model.addAttribute("images", this.fileService.findByDestination(id));
+        model.addAttribute("categories", categories);
         model.addAttribute("attractions", attractions);
         model.addAttribute("attractionsImages", attractionImages);
         return "Destination/Destination";

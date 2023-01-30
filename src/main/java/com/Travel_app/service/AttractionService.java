@@ -54,4 +54,8 @@ public class AttractionService {
     public List<Attraction> findByDestination(Long id) {
         return this.attractions.findAllByDestination(id);
     }
+
+    public List<Attraction> findByDestinationAndCategory(Long id, String category) {
+        return this.attractions.findAllByDestinationAndCategory(id, category);
+    }
 }

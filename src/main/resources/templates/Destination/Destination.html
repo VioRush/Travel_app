@@ -15,48 +15,56 @@
     <div class="container center">
     <h2>Odkryj dla siebie nowy kierunek</h2>
     <h2 th:text="${destination.getTown()}"></h2><hr>
-    <div class="image_row">
-        <div th:each="im:${images}">
-            <img class="image image-medium" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
+        <div class="image_row">
+            <div th:each="im:${images}">
+                <img class="image image-medium" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
+            </div>
         </div>
-    </div>
-    <div>
-        <h5 th:text="'Położenie: ' + ${destination.getCountry()} + ', ' + ${destination.getContinent()}"></h5>
-        <h5 th:text="${destination.getDescription()}"></h5></br></br>
-    </div>
-    <div>
-        <h2>Atrakcję turystyczne</h2>
-        <h5>Miejsca, które warto odwiedzić, trasy turystyczne, które każdy powinnien przejść w swoim życiu choć raz i inne unikalne atrakcje. </h5>
-        <div class="container">
-            <div class="div-transform">
-                <div th:each="attraction:${attractions}">
-                    <div class="card card-white">
-                        <div th:each="im:${attractionsImages}">
-                            <img class="image image-medium" th:if="${im.getAttraction().getId()} == ${attraction.getId()}" src="${'/static/attractions/' + im.getPath()}" th:src="@{'/attractions/'+${im.getPath()}}">
-                        </div>
-                        <div class="row">
-                            <a class="text-link" th:href="@{'/attractions/details/' + ${attraction.getId()}}"><h2 th:text="${attraction.getName()}"></h2></a>
-                            <button class="icon" sec:authorize="isAuthenticated()">
-                                <a th:if="!${liked.contains(attraction)}" class="bi bi-heart" th:href="@{'/attractions/addToLiked/' + ${attraction.getId()}}"></a>
-                                <a th:unless="!${liked.contains(attraction)}" class="bi bi-heart-fill" th:href="@{'/attractions/removeFromLiked/' + ${attraction.getId()}}"></a>
-                            </button>
-                        </div>
-                        <div class="row review">
-                            <span th:each="item: ${#numbers.sequence(1,5)}">
-                                <i th:if="${item <= attraction.getReview()}" class="bi bi-circle-fill"></i>
-                                <i th:unless="${item <= attraction.getReview()}" class="bi bi-circle"></i>
-                            </span>
-                            <p style="padding-left:5px;" th:text="${attraction.getReview()}"></p>
-                        </div>
-                        <div class="row review">
-                            <p th:text="${attraction.getCategory()}"></p>
-                        </div>
+        <div>
+            <h5 th:text="'Położenie: ' + ${destination.getCountry()} + ', ' + ${destination.getContinent()}"></h5>
+            <h5 th:text="${destination.getDescription()}"></h5></br></br>
+        </div>
+        <div>
+            <h2>Atrakcję turystyczne</h2>
+            <h5>Miejsca, które warto odwiedzić, trasy turystyczne, które każdy powinnien przejść w swoim życiu choć raz i inne unikalne atrakcje. </h5>
+            <div class="row" >
+                <div class="card-white">
+                    <h5>Kategorie</h5>
+                </div>
+                <div th:each="category:${categories}" class="card-white">
+                    <a th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}} + '/' + ${category}"><h5 th:text="${category}"></h5></a>
+                </div>
+            </div>
+            <div class="container">
+                <div class="div-transform">
+                    <div th:each="attraction:${attractions}">
+                        <div class="card card-white">
+                            <div th:each="im:${attractionsImages}">
+                                <img class="image image-medium" th:if="${im.getAttraction().getId()} == ${attraction.getId()}" src="${'/static/attractions/' + im.getPath()}" th:src="@{'/attractions/'+${im.getPath()}}">
+                            </div>
+                            <div class="row">
+                                <a class="text-link" th:href="@{'/attractions/details/' + ${attraction.getId()}}"><h2 th:text="${attraction.getName()}"></h2></a>
+                                <button class="icon" sec:authorize="isAuthenticated()">
+                                    <a th:if="!${liked.contains(attraction)}" class="bi bi-heart" th:href="@{'/attractions/addToLiked/' + ${attraction.getId()}}"></a>
+                                    <a th:unless="!${liked.contains(attraction)}" class="bi bi-heart-fill" th:href="@{'/attractions/removeFromLiked/' + ${attraction.getId()}}"></a>
+                                </button>
+                            </div>
+                            <!--<div class="row review">
+                                <span th:each="item: ${#numbers.sequence(1,5)}">
+                                    <i th:if="${item <= attraction.getReview()}" class="bi bi-circle-fill"></i>
+                                    <i th:unless="${item <= attraction.getReview()}" class="bi bi-circle"></i>
+                                </span>
+                                <p style="padding-left:5px;" th:text="${attraction.getReview()}"></p>
+                            </div>-->
+                            <div class="row review">
+                                <p th:text="${attraction.getCategory()}"></p>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>
