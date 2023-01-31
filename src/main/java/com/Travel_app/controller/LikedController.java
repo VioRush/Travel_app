@@ -29,8 +29,9 @@ public class LikedController {
     private UserService userService;
 
     @GetMapping("/liked/")
-    public String getAll(Model model) {
-        List<LikedDestination> likedDestinations = this.likedDestinationService.findAll();
+    public String getAll(Model model, HttpServletRequest request) {
+        User user = this.userService.findByLogin(request.getUserPrincipal().getName());
+        List<LikedDestination> likedDestinations = this.likedDestinationService.findAllByUser(user);
         ArrayList<File> images = new ArrayList<File>();
         for (LikedDestination dest: likedDestinations){
             System.out.println(dest.getDestination().getId());
@@ -41,7 +42,7 @@ public class LikedController {
                 images.add(im.listIterator().next());
             }
         }
-        List<LikedAttraction> likedAttractions = this.likedAttractionService.findAll();
+        List<LikedAttraction> likedAttractions = this.likedAttractionService.findAllByUser(user);
         ArrayList<File> attraction_images = new ArrayList<File>();
         for (LikedAttraction attraction: likedAttractions){
             System.out.println(attraction.getAttraction().getId());

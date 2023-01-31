@@ -12,11 +12,11 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="coloured">
-        <h1>Tymi postami już się podzieliłeś</h1>
+    <div>
+        <h2 class="title">Tymi postami już się podzieliłeś</h2><hr>
     </div>
     <p class="message" th:if="${message} == 'success'">Udane dodanie</p>
-    <div class="container center">
+    <div class="container center colored_background">
         <div class="div-transform">
             <a sec:authorize="isAuthenticated()==true" class="dark" th:href="@{/blog/add}"><i class="bi bi-pencil-square"></i> Nowy wpis</a>
             <div th:if="!${posts.isEmpty()}" >

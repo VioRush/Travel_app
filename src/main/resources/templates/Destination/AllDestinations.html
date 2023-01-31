@@ -12,14 +12,15 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container">
+    <div class="container full-width">
+        <h2 class="title" th:text="'Odkryj nowy kierunek: ' + ${country}"></h2><hr/>
         <div class="div-transform">
             <div th:each="destination:${destinations}">
-                <div class="card card-medium">
+                <div class="card card-medium colored_background">
                     <div th:each="im:${images}">
                         <img class="image image-medium" th:if="${im.getDestination().getId()} == ${destination.getId()}" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
                     </div>
-                    <div class="row">
+                    <div class="row" style="margin-top: 0px !important;">
                         <a class="text-link" th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}}"><h2 th:text="${destination.getTown()}"></h2></a>
                         <button class="icon" sec:authorize="isAuthenticated()">
                             <a th:if="!${liked.contains(destination)}" class="bi bi-heart" th:href="@{'/destinations/addToLiked/' + ${destination.getCountry()} + '/' + ${destination.getId()}}"></a>

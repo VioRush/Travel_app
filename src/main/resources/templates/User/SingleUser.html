@@ -12,19 +12,20 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container center">
-        <div><br><h1 align="center">Profil użytkownika</h1><br></div>
+    <div class="container center ">
+        <div><br><h1 align="center">Profil użytkownika</h1><hr></div>
 
         <div align="center" class="tab-content bg-transparent">
             <div id="note-full-container" class="note-has-grid row">
-                <div class="card card-body" id="card">
+                <div class="card card-body colored_background" id="card">
                     <span class="side-stick"></span>
                     <div class="form-group row">
                         <img th:if="${image != null}" class="profile_img" src="${'/static/' + image.getPath()}" th:src="@{'/'+${image.getPath()}}"/>
                         <img th:unless="${image != null}" class="profile_img" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
-                        <div class="col-8" align="center" style="margin-top: 60px"><h1 class=" font-12 text-muted" th:text="${user.getUsername()}"></h1></div>
-                        <div class="col-12"><h3 align="right" ><a th:href="@{'/users/edit/' + ${user.id}}">Edytuj</a></h3></div>
+                        <div class="col-4" text-align="center" style="margin-top: 60px"><h1 class=" font-12" th:text="${user.getUsername()}"></h1></div>
                     </div>
+                    <div class="col-24"><a th:href="@{'/users/edit/' + ${user.id}}"><h3 style="text-align:right" >Edytuj</h3></a></div>
+
                     <fieldset>
                         <legend>Dane osobowe</legend>
                         <p style="margin-top: 30px">

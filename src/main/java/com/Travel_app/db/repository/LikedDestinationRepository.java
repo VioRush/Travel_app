@@ -23,6 +23,14 @@ public interface LikedDestinationRepository extends JpaRepository<LikedDestinati
             "where ld.destination_id = d.destination_id " +
             "group by d.town " +
             "order by c desc " +
+            "limit 3", nativeQuery = true)
+    List<LikedDestination> findTopThree();
+
+    @Query(value = "select *, count(*) c " +
+            "from Liked_Destination ld, Destination d " +
+            "where ld.destination_id = d.destination_id " +
+            "group by d.town " +
+            "order by c desc " +
             "limit 10", nativeQuery = true)
     List<LikedDestination> findTopTen();
 

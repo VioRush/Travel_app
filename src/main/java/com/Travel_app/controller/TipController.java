@@ -25,9 +25,9 @@ public class TipController {
 
     @GetMapping({"tips/","tips/{category}"})
     public String getAllTips(Model model, @PathVariable(required = false) String category) {
-        System.out.println(category);
         if(category!=null){
             model.addAttribute("tips", this.tipService.findAllByCategory(category));
+            model.addAttribute("selected", category);
         }
         else{
             model.addAttribute("tips", this.tipService.findAll());

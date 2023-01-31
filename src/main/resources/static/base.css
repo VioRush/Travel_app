@@ -24,6 +24,8 @@ html {
     box-sizing: content-box !important;
     margin: 0;
     padding: 0;
+    font-family: "Montserrat", sans-serif;
+
     --coffee: #6D543Eff;
     --eerie-black: #171B1Aff;
     --silver-pink: #C3A899ff;
@@ -48,25 +50,73 @@ html {
 }
 
 body {
- background-image: url("sapiens.png")
+    background-image: url("background.jpg");
+    background-size: cover;
+    /* background-size: auto;
+   background-repeat: no-repeat;*/
 }
 
 header{
-    background-color: var(--sand);
-    margin: 0px 0px 0px 0px;
+    /*background-color: var(--sand);*/
+    margin: 10px 0px 20px 0px;
     display: flex !important;
     justify-content: space-between;
     align-items: center;
-    align-content: stretch;
-    padding: 10px;
+    align-content: center;
+    /*border-bottom: 0.5px solid transparent;
+    border-color: #18241Cff;*/
 }
 
-nav{
-    width: 100%;
+li, a{
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500
+    font-size: 24px;
+    color: #edf0f1 !important;
+    text-decoration:none !important;
 }
+
+.logo{
+    cursor: pointer;
+    padding:0px;
+}
+
+.navigation, .user, .navigationUser{
+    list-style:none;
+}
+
+.navigation li, .user li{
+     display: inline-block;
+     padding: 0px 20px;
+     color: #F6F3EE;
+ }
+
+.navigationUser li{
+     display: inline-block;
+     padding: 0px 30px;
+     color: #F6F3EE;
+ }
+
+ .navigation li a, .user li a, .navigationUser li a{
+     /*transition: all 0.3s case 0s;*/
+     color: #18241Cff !important;
+     text-transform: uppercase;
+      letter-spacing: 4px;
+      font-weight: 550;
+
+ }
+
+ .navigation li a:hover, .user li a:hover{
+     color: #0088a9;
+ }
 
 .container{
-    margin-left: 0px !important;
+    width: auto !important;
+    margin-left: 10px !important;
+}
+
+.full-width{
+    max-width: initial !important;
+    padding-right: 20px !important;
 }
 
 .container.center{
@@ -93,6 +143,10 @@ nav{
     width:1250px;
 }
 
+.main{
+    justify-content: space-around;
+}
+
 .full-size{
     display:flex;
     margin-top: 20px;
@@ -106,6 +160,8 @@ nav{
     display:flex;
     flex-direction: column;
     flex-wrap:nowrap;
+    border-right: 1px solid rgba(0,0,0,.125);
+     border-radius: 6px !important;
 }
 
 form{
@@ -133,10 +189,14 @@ form{
     opacity: 0.85;
 }
 
-.card h2, .text-button{
+.card h2, .text-button, .more h2, .card-category h5{
     text-transform: uppercase;
     letter-spacing: 4px;
     color: #edf0f1
+}
+
+.title{
+    text-align: center;
 }
 
 .card-small, .card-medium, .card-white, .fact-card{
@@ -171,12 +231,36 @@ form{
 .card-medium{
     width: 350px;
     height:400px;
+    background: none;
+}
+
+.card-large{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.fact-card, .fact-body{
+    width: 400px;
+    margin: 0px 10px 0px 60px;
 }
 
 .fact-card{
-    width: 400px;
-    margin-top: 30px;
-    background: linear-gradient(225deg, #fff6fe 0%, #18241Cff 100%);
+    background-color: transparent !important;/*linear-gradient(225deg, #C3A899ff 0%, #18241Cff 100%);*/
+}
+
+.fact-body, .colored_background, .card-category{
+    background: #ffffff66 !important;
+}
+
+.card-category{
+    width: 170px;
+    height: 50px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 6px !important;
+    padding: 10px;
+    margin:10px;
+    text-align: center;
 }
 
 .card-comment{
@@ -188,7 +272,7 @@ form{
     margin-left: 0;
 }
 
-.row{
+.row {
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap !important;
@@ -214,9 +298,10 @@ form{
     width: 1900px;
 }
 
-flex-row{
-    justify-content: space-between;
-     align-items: center;
+ .categories, .row-categories{   /*flex-row,*/
+    justify-content: center;
+     align-items: stretch;
+     margin-bottom: 50px !important;
 }
 
 .icon, .text-button{
@@ -240,6 +325,10 @@ flex-row{
     fill: green !important;
 }
 
+.bi-person{
+    color: #18241Cff !important;
+}
+
 .review{
     display:flex;
     flex-direction: row !important;
@@ -250,15 +339,15 @@ flex-row{
     align-content: flex-start;
 }
 
-.text-link{
+.text-link, .title{
     padding: 15px 0px 0px 15px;
 }
 
-.card-white h2, .fact-card h2, .text-link-dark h2, .dark, .text-link-dark p, .text-button{
+.card-white h2, .fact-card h2, .text-link-dark h2, .dark, .text-link-dark p, .text-button, .card-category h5, .card-large h2{
     color: #262C38 !important;
 }
 
-.card-white a{
+.card-white a, .title, .card-large a{
     color: #262C38 !important;
 }
 
@@ -271,13 +360,32 @@ flex-row{
     box-shadow: -7px 4px 28px -3px #262C38;
 }
 
-.card-small:before, .card-medium:before{
+.card-small:before{
     background: linear-gradient(90deg, #262C38 0%,  #A8BED2ff 100%)
 }
 
+.selected, .card-white.country{
+     background: linear-gradient(90deg, #909a20 0%, #d9a75aa8 100%) !important;
+     border-right: 1px solid rgba(0,0,0,.125);
+          border-radius: 6px !important;
+}
+
+.card-white.country{
+    background: #ffffff66 !important;
+     padding: 2px 0px 2px 60px;
+}
+
+.card-small.padding{
+    padding: 10px 0px 10px 30px;
+}
+
+.padding{
+     padding: 10px 0px 10px 30px;
+}
 /*login*/
 .card.login{
-    top: 30%;
+    top: 10%;
+    left: 35%;
     width:auto;
     position: absolute;
 }
@@ -298,6 +406,11 @@ form.column{
     align-items: stretch;
     justify-content: center;
     margin: 15px 0px 10px 0px;
+}
+
+.ranking{
+    align-items: center;
+    border: none;
 }
 
 .group, .group p{
@@ -324,43 +437,7 @@ form.column{
 }
 
 /*end of login*/
-li, a{
-    font-family: "Montserrat", sans-serif;
-    font-weight: 500
-    font-size: 24px;
-    color: #edf0f1 !important;
-    text-decoration:none !important;
-}
 
-.logo{
-    cursor: pointer;
-    padding:0px;
-}
-
-.navigation, .user, .navigationUser{
-    list-style:none;
-}
-
-.navigation li, .user li{
-     display: inline-block;
-     padding: 0px 20px;
-     color: #F6F3EE;
- }
-
-.navigationUser li{
-     display: inline-block;
-     padding: 0px 30px;
-     color: #F6F3EE;
- }
-
- .navigation li a, .user li a, .navigationUser li a{
-     transition: all 0.3s case 0s;
-     color: #F6F3EE;
- }
-
- .navigation li a:hover, .user li a:hover{
-     color: #0088a9;
- }
 
  .image {
     border-radius:6px;
@@ -372,6 +449,7 @@ li, a{
  .image-medium{
     width: 350px;
     height: 300px;
+    margin: 10px 10px 0px 0px !important;
  }
 
  .profile_img {
@@ -382,25 +460,29 @@ li, a{
    }
 
  .usernameButton {
-    background: #262C38;
+    background: none;
     font-family: "Montserrat", sans-serif;
-    font-weight: 500
-    font-size: 24px;
-    color: #edf0f1;
+    font-weight: 500;
+    font-size: 22px;
+    color: #18241Cff;
     border: none;
-
+    letter-spacing: 4px;
+    padding-left: 5px;
  }
 
  fieldset{
     width: 1100px;
     border: 1px solid #d6d6d6;
-    background: #deede3;
+    background: #deede3;/* #f2f6f8*/
     line-height: 1.6em;
     align:center;
     margin-top: 10em;
     border-radius:5px;
  }
 
+.form-group{
+    justify-content: flex-start;
+}
  legend{
     font-family: "Montserrat", sans-serif;
     text-align:left;
@@ -418,7 +500,7 @@ li, a{
     padding-right:40px;
  }
 
-textarea{              /*nie rabotaet*/
+textarea{
     width: 30%;
     height: 400px;
 }
@@ -488,7 +570,7 @@ display:none;
 }
 
 .label-in{
-    display:block !important;
+    display:in-line !important;
     margin: 0 0 0 .4rem;
     position: absolute;
     padding-left: 10px;
@@ -499,11 +581,18 @@ input[type="search"]{
     height: 2.4rem;
     width: 47rem;
     border-radius: 6px;
+    padding-inline-start:40px;
+    outline-offset: 2px !important;
 }
 
 .menu{
-    width: 90%;
+    /*width: 90%;*/
     margin: 0px 5px 0px 25px !important;
+    justify-content: flex-start;
+}
+
+.menu a{
+    padding-left: 20px;;
 }
 
 .coloured{
@@ -516,9 +605,37 @@ input[type="search"]{
     padding-right:0.5rem;
 }
 
+.form-padding{
+    margin-right: 80px !important;
+}
+
+.row-ranking h2{
+    margin-right: 40px;
+    font-size:42px;
+}
+
 .medium{
     width:700px !important;
 }
 
+.btn-success{
+    background-color: #909A20 !important ;
+    border-color: #909A20 !important ;
+}
 
+.white{
+    color: #edf0f1;
+}
+
+.more{
+    background-color: white;
+    margin-top:10px;
+    padding-top: 14px;
+    width: 190px;
+}
+
+.more h2{
+    color: var(--sand) !important;
+    text-align: center;
+}
 

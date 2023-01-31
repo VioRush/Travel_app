@@ -29,9 +29,9 @@ public class ApplicationController {
 
     @GetMapping({"applications/{category}","applications/"})
     public String getAllApplications(Model model, @PathVariable(required = false) String category) {
-        System.out.println(category);
         if(category!=null){
             model.addAttribute("applications", this.applicationService.findAllByCategory(category));
+            model.addAttribute("selected", category);
         }
         else{
             model.addAttribute("applications", this.applicationService.findAll());

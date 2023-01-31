@@ -12,22 +12,24 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="nav_links">
-        <a class="bordered-link" th:href="@{/destinations/}">Kraje</a>
-        <a class="bordered-link" th:href="@{/attractions/}">Atrakcje</a>
-    </div>
     <div class="container">
-        <div class="flex-row">
+        <div class="flex-row main">
             <div class="flex-column">
+                <div class="card fact-card" style="margin-left: 0px;">
+                    <div class="row fact-label">
+                        <h2>Wybierz kierunek</h2>
+                    </div>
+                </div>
                 <div th:each="continent:${continents}">
-                    <div class="card card-small">
-                        <div>
+                    <div th:if="${continent == selected}" class="card-small padding selected">
                             <a th:href="@{'/selected/' + ${continent}}"><h2 th:text="${continent}"></h2></a>
-                        </div>
+                    </div>
+                    <div th:unless="${continent == selected}" class="card-small padding">
+                            <a th:href="@{'/selected/' + ${continent}}"><h2 th:text="${continent}"></h2></a>
                     </div>
                     <div th:if="${continent == selected}">
                         <div th:each="country:${countries}">
-                            <div class="card-white card-small">
+                            <div class="card-white country">
                                 <div>
                                     <a th:href="@{'/destinations/' + ${country}}"><h2 th:text="${country}"></h2></a>
                                 </div>
@@ -40,11 +42,11 @@
                 <form class="form-inline" th:action="@{/search}" method="get">
                     <div th:replace="Fragments::Search"></div>
                 </form>
-               <div th:if="${#httpServletRequest.servletPath.length() == 7}">
-                   <div th:if="!${attractions.isEmpty() and destinations.isEmpty() and tips.isEmpty()}">
-                       <h2> Wyniki wyszukiwania: </h2><br>
+               <div th:if="${#httpServletRequest.servletPath.length() == 7}" class="colored_background">
+                   <div th:if="!${attractions.isEmpty() and destinations.isEmpty() and tips.isEmpty()}" class="padding">
+                       <h3> Wyniki wyszukiwania: </h3><br>
                    </div>
-                   <div th:if="!${destinations.isEmpty()}">
+                   <div th:if="!${destinations.isEmpty()}" class="padding">
                        <h3> Miasta i kraje </h3><hr/>
                        <div class="card-white" th:each="destination:${destinations}">
                            <a class="text-link-dark" th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}}"><h2 th:text="${destination.getTown()}"></h2></a>
@@ -69,27 +71,34 @@
             </div>
             <div>
                 <div class="card fact-card">
-                    <div class="row">
+                    <div class="row fact-label">
+                        <img class="image" src="${'/static/fact.png'}" th:src="@{'../fact.png'}"></a></li> <!--<h1 class="logo" th:text="TravelApp"/> -->
                         <h2>Ciekawostka na dziś</h2>
-                        <i class="bi bi-tencent-qq"></i>
                     </div>
-                    <h5 th:text="${fact.getTitle()}"></h5><br/>
-                    <h5 th:text="${fact.getContent()}"></h5>
+                </div>
+                <div class="card card-white fact-body">
+                    <h5 th:text="${fact.getTitle()}"></h5><hr/>
+                    <p th:text="${fact.getContent()}"></p>
                 </div>
             </div>
         </div>
     </div>
-    <div>
+    <div class="container full-width">
         <div>
-            <h2>A może chcesz zobaczyć najpopularniejsze miasta? <a th:href="@{/rankings/}">Sprawdź rankingi</a></h2>
-        </div>
+            <h2 class="white">A może chcesz zobaczyć najpopularniejsze miasta? <a th:href="@{/rankings/}" style="color: var(--sand) !important">Sprawdź rankingi </a></h2>
+        </div> <hr/>
         <div class="div-transform">
             <div th:each="destination:${top}">
-                <div class="card card-white">
-                    <h3 th:text="${destinationStat.index + 1}"></h3>
-                    <div class="row">
+                <div class="row">
+                <h2 th:text="${destinationStat.index + 1}" style="color: var(--sand)"></h2>
+                <div class="card card-white colored_background">
                         <a class="text-link" th:href="@{'/destinations/' + ${destination.getDestination().getCountry()} + '/details/' + ${destination.getDestination().getId()}}"><h2 th:text="${destination.getDestination().getTown()}"></h2></a>
-                    </div>
+                </div>
+                </div>
+            </div>
+            <div>
+                <div class="card card-white more colored_background">
+                    <a th:href="@{/rankings/}"><h2>Więcej...</h2> </a>
                 </div>
             </div>
         </div>

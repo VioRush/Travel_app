@@ -13,23 +13,33 @@
 </header>
 <body>
     <div>
-        <h1 th:text="${attraction.getName()}"></h1>
-        <h3 ><a th:href="@{'/admin/attractions/edit/' + ${attraction.id}}">Edytuj</a></h3>
-        <h3 ><a th:href="@{'/admin/attractions/delete/' + ${attraction.id}}">Usuń</a></h3>
+        <div class="row form-group">
+            <h1 th:text="${attraction.getName()}"></h1>
+            <a class="dark" th:href="@{'/admin/attractions/edit/' + ${attraction.id}}"><i class="bi bi-pencil"></i></a>
+            <a class="dark" th:href="@{'/admin/attractions/delete/' + ${attraction.id}}"><i class="bi bi-trash"></i></a>
+        </div>
     </div>
-    <div align="center" class="tab-content bg-transparent">
-        <div id="note-full-container" class="note-has-grid row">
+    <div align="center" class="tab-content  colored_background">
+        <div id="note-full-container" class="note-has-grid row colored_background">
             <div class="card card-body" id="card">
                 <span class="side-stick"></span>
-                <p class=" font-12 text-muted" th:text="|${attraction.destinationDestination.town}, ${attraction.destinationDestination.country}"/></p>
-                <p class=" font-12 text-muted" th:text="${attraction.getCategory()}"></p>
-                <p class=" font-12 text-muted" th:text="${attraction.getReview()}"></p>
-                <p class=" font-12 text-muted" th:text="${attraction.getPrice()}"></p>
+                <p class=" font-12" th:text="${attraction.getCategory()}"></p>
                 <div>
-                    <p class=" font-12 text-muted" th:text="${attraction.getDescription()}"></p>
+                    <h3>Opis:</h3>
+                    <h5 th:text="${attraction.getDescription()}"></h5></br>
                 </div>
                 <div>
-                    <p class=" font-12 text-muted" th:text="${attraction.getContact()}"></p>
+                    <h3>Cena wejścia:</h3>
+                    <h5 th:text="${attraction.getPrice()}"></h5>
+                </div>
+                <div>
+                    <h3>Położenie:</h3>
+                    <h5 th:text="|${attraction.destinationDestination.town}, ${attraction.destinationDestination.country}"></h5>
+                </div>
+                <div>
+                    <h3>Kontakt:</h3>
+                    <div th:if="${attraction.getContact()} == null"> <h5>Brak danych</h5></div>
+                    <div th:unless="${attraction.getContact()} == null"><h5 th:text="${attraction.getContact()}"></h5></div>
                 </div>
             </div>
         </div>

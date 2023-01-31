@@ -14,13 +14,22 @@
 <body>
     <div class="container center">
         <div class="div-transform">
-            <div class="row">
-                <div class="card" th:each="category:${categories}">
-                   <a th:href="@{'/applications/' + ${category}}"> <button th:text="${category}"></button></a>
+            <div class="row row-categories">
+                <div th:each="category:${categories}">
+                    <div th:if="${category == selected}" class="card-category selected">
+                        <a th:href="@{'/applications/' + ${category}}"> <h5 th:text="${category}"></h5></a>
+                    </div>
+                    <div th:unless="${category == selected}" class="card-category">
+                        <a th:href="@{'/applications/' + ${category}}"> <h5 th:text="${category}"></h5></a>
+                    </div>
                 </div>
             </div>
+            <br>
+            <div th:if="${applications.isEmpty()}" class="colored_background">
+                <h5>Brak aplikacji z wybranej kategorii. Wybierz inną kategorię.</h5>
+            </div>
             <div th:each="app:${applications}">
-                <div class="card">
+                <div class="card card-white">
                     <h2 th:text="${app.getAppName()}"></h2>
                     <p th:text="'Kategoria: ' + ${app.getCategory()}"></p>
                     <h5 th:text="${app.getDescription()}"></h5>

@@ -45,13 +45,15 @@ public class Attraction {
     @JoinColumn(name = "destination_destination_id", nullable = false)
     private Destination destinationDestination;
 
+    /*
     @OneToMany(mappedBy = "attraction")
     private Set<File> images = new LinkedHashSet<>();
+
 
     @ManyToMany
     @JoinTable(name = "liked_attraction",
             joinColumns = @JoinColumn(name = "attraction_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users = new LinkedHashSet<>();
-
+*/
 }

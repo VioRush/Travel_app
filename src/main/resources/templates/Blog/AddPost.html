@@ -12,7 +12,7 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container center">
+    <div class="container center colored_background">
         <br>
         <div>
             <h2 align="center">Podziel się wrażeniami z podróży lub doświadczeniem!</h2>
@@ -20,14 +20,14 @@
         <div class="container center">
             <form align="center" class="requires-validation" th:action="@{/blog/add}" th:object="${post}" method="post" enctype="multipart/form-data">
                 <div class="m-3">
-                    <div class="form-group row">
+                    <div class="form-padding row">
                         <label class="col-4 col-form-label">Tytuł: </label>
                         <div class="col-8">
                             <input th:field="*{title}" class="form-control"/><span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-padding row">
                         <label class="col-4 col-form-label">Treść: </label>
                         <div class="col-8">
                             <textarea rows="10" cols="70" th:field="*{body}" class="form-control"/> <span th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Content Error</span>
@@ -44,7 +44,6 @@
                         </div>
 
                     </div></br>
-
                     <div>
                         <button type="submit" class="btn btn-success">Dodaj</button>
                     </div>

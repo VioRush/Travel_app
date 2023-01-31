@@ -42,4 +42,8 @@ public class LikedDestinationService {
     public List<LikedDestination> findTopTenByContinent(String continent) {
         return this.likedDestinationRepository.findTopTenByContinent(continent);
     }
+
+    public List<LikedDestination> findTopThree() {
+        return this.likedDestinationRepository.findTopThree();
+    }
 }

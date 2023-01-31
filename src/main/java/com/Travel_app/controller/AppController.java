@@ -53,7 +53,7 @@ public class AppController {
             model.addAttribute("countries", countries);
         }
 
-        List<LikedDestination> top = likedDestinationService.findTopTen();
+        List<LikedDestination> top = likedDestinationService.findTopThree();
         System.out.println(top.size());
         List<Fact> facts  = factService.findAll();
 
@@ -85,7 +85,6 @@ public class AppController {
     @GetMapping("/destinations/{country}")
     public String getDestinations(@PathVariable String country, Model model, HttpServletRequest request){
         List<Destination> destinations = this.destinationService.findAllByCountry(country);
-        System.out.println("ktooo: " + request.getUserPrincipal());
         if(request.getUserPrincipal() != null){
             List<LikedDestination> likedDestinations = this.likedDestinationService.findAllByUser(this.userService.findByLogin(request.getUserPrincipal().getName()));
             ArrayList<Destination> liked = new ArrayList<>();
@@ -104,7 +103,7 @@ public class AppController {
                 images.add(im.listIterator().next());
             }
         }
-
+        model.addAttribute("country", country);
         model.addAttribute("destinations", destinations);
         model.addAttribute("images", images);
         return "Destination/AllDestinations";
@@ -193,16 +192,26 @@ public class AppController {
 
     @GetMapping({"rankings/","rankings/{category}"})
     public String getRankings(Model model, @PathVariable(required = false) String category){
-        System.out.println(category);
         List<LikedDestination> top;
-        if(category!=null){
+        if(category!=null) {
             top = likedDestinationService.findTopTenByContinent(category);
+            model.addAttribute("selected", category);
         }
-        else{
+        else {
             top = likedDestinationService.findTopTen();
-            System.out.println(top.size());
         }
+
+        ArrayList<File> images = new ArrayList<File>();
+        for (LikedDestination dest: top){
+            ArrayList<File> im = new ArrayList<File>();
+            im.addAll(fileService.findByDestination(dest.getDestination().getId()));
+            if(!im.isEmpty()) {
+                images.add(im.listIterator().next());
+            }
+        }
+        System.out.println("Fotok:       " + images.size());
         model.addAttribute("top", top);
+        model.addAttribute("images", images);
         model.addAttribute("categories", continents);
         return "Rankings";
     }

@@ -12,7 +12,7 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-<div class="container center">
+<div class="container center colored_background">
     </br>
     <div class="row">
         <h2 style="padding-left:14px;" th:text="${attraction.getName()}"></h2>
@@ -21,18 +21,9 @@
             <a th:unless="!${liked}" class="bi bi-heart-fill" th:href="@{'/attractions/removeFromLiked/' + ${attraction.getId()}}"></a>
         </button>
     </div>
-    <div class="row review">
-                            <span th:each="item: ${#numbers.sequence(1,5)}">
-                                <i th:if="${item <= attraction.getReview()}" class="bi bi-circle-fill"></i>
-                                <i th:unless="${item <= attraction.getReview()}" class="bi bi-circle"></i>
-                            </span>
-        <p style="padding-left:5px;" th:text="${attraction.getReview()}"></p>
-    </div>
-    <hr>
-    <div class="row review">
-        <p th:text="${attraction.getCategory()}"></p>
-    </div>
-
+    <div class="row review" >
+        <p th:text="${attraction.getCategory()}" style="margin: 0px !important;"></p>
+    </div><hr>
     <div class="image_row">
         <div th:each="im:${images}">
             <img class="image image-medium" src="${'/static/attractions/' + im.getPath()}" th:src="@{'/attractions/'+${im.getPath()}}">
@@ -46,8 +37,13 @@
         <h5 th:text="${attraction.getPrice()}"></h5>
     </div>
     <div>
+        <h3>Położenie:</h3>
+        <h5 th:text="${attraction.getDestinationDestination().getCountry()} + ', ' + ${attraction.getDestinationDestination().getContinent()}"></h5>
+    </div>
+    <div>
         <h3>Kontakt:</h3>
-        <h5 th:text="${attraction.getContact()}"></h5>
+        <div th:if="${attraction.getContact()} == null"> <h5>Brak danych</h5></div>
+        <div th:unless="${attraction.getContact()} == null"><h5 th:text="${attraction.getContact()}"></h5></div>
     </div>
 </div>
 </body>

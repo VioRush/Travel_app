@@ -12,22 +12,33 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-<div class="container center">
-    <div class="div-transform">
-        <div class="row">
-            <div class="card" th:each="category:${categories}">
-                <a th:href="@{'/rankings/' + ${category}}"> <button th:text="${category}"></button></a>
+    <h2 class="title"> Ranking najczęściej wybieranych kierunków</h2><hr/>
+    <div class="row categories">
+        <div th:each="category:${categories}">
+            <div th:if="${category == selected}" class="card-category selected">
+                <a th:href="@{'/rankings/' + ${category}}"> <h5 th:text="${category}"></h5></a>
+            </div>
+            <div th:unless="${category == selected}" class="card-category">
+                <a th:href="@{'/rankings/' + ${category}}"> <h5 th:text="${category}"></h5></a>
             </div>
         </div>
-        <div th:each="destination:${top}">
-            <div class="card card-white">
-                <h3 th:text="${destinationStat.index + 1}"></h3>
-                <div class="row">
-                    <a class="text-link" th:href="@{'/destinations/' + ${destination.getDestination().getCountry()} + '/details/' + ${destination.getDestination().getId()}}"><h2 th:text="${destination.getDestination().getTown()}"></h2></a>
+    </div>
+    <div class="container center">
+        <div class="flex-column ranking">
+            <div th:each="destination:${top}">
+                <div class="row row-ranking">
+                    <h2 th:text="${destinationStat.index + 1}"></h2>
+                    <div class="card card-white colored_background">
+                        <div th:each="im:${images}">
+                            <img class="image image-medium" th:if="${im.getDestination().getId()} == ${destination.getDestination().getId()}" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}" alt="img">
+                        </div>
+                        <div class="row">
+                            <a class="text-link" th:href="@{'/destinations/' + ${destination.getDestination().getCountry()} + '/details/' + ${destination.getDestination().getId()}}"><h2 th:text="${destination.getDestination().getTown()}"></h2></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>
