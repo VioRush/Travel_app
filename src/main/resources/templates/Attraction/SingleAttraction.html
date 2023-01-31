@@ -12,45 +12,47 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div>
-        <div class="row form-group">
+    <div contener>
+        <div class="row review-padding">
             <h1 th:text="${attraction.getName()}"></h1>
-            <a class="dark" th:href="@{'/admin/attractions/edit/' + ${attraction.id}}"><i class="bi bi-pencil"></i></a>
-            <a class="dark" th:href="@{'/admin/attractions/delete/' + ${attraction.id}}"><i class="bi bi-trash"></i></a>
-        </div>
+            <button class="btn btn-success"><a class="dark" th:href="@{'/admin/attractions/edit/' + ${attraction.getId()}}"><i class="bi bi-pencil"></i></a></button>
+            <button class="btn btn-success"> <a class="dark" th:href="@{'/admin/attractions/delete/' + ${attraction.getId()}}"><i class="bi bi-trash"></i></a> </button>
+        </div><hr>
     </div>
-    <div align="center" class="tab-content  colored_background">
-        <div id="note-full-container" class="note-has-grid row colored_background">
-            <div class="card card-body" id="card">
-                <span class="side-stick"></span>
-                <p class=" font-12" th:text="${attraction.getCategory()}"></p>
-                <div>
-                    <h3>Opis:</h3>
-                    <h5 th:text="${attraction.getDescription()}"></h5></br>
-                </div>
-                <div>
-                    <h3>Cena wejścia:</h3>
-                    <h5 th:text="${attraction.getPrice()}"></h5>
-                </div>
-                <div>
-                    <h3>Położenie:</h3>
-                    <h5 th:text="|${attraction.destinationDestination.town}, ${attraction.destinationDestination.country}"></h5>
-                </div>
-                <div>
-                    <h3>Kontakt:</h3>
-                    <div th:if="${attraction.getContact()} == null"> <h5>Brak danych</h5></div>
-                    <div th:unless="${attraction.getContact()} == null"><h5 th:text="${attraction.getContact()}"></h5></div>
-                </div>
+    <div class="container center colored_background">
+        <div class="row" >
+            <h5 th:text="'Kategoria: ' + ${attraction.getCategory()}" style="padding: 0px !important; margin: 0px !important;"></h5>
+        </div>
+        <div>
+            <h3>Opis:</h3>
+            <h5 th:text="'Opis: ' + ${attraction.getDescription()}"></h5></br>
+        </div>
+        <div>
+            <h3>Cena wejścia:</h3>
+            <h5 th:text="${attraction.getPrice()}"></h5>
+        </div>
+        <div>
+            <h3>Położenie:</h3>
+            <h5 th:text="${attraction.getDestinationDestination().getTown()} + ', ' + ${attraction.getDestinationDestination().getCountry()} + ', ' + ${attraction.getDestinationDestination().getContinent()}"></h5>
+        </div>
+        <div>
+            <h3>Kontakt:</h3>
+            <div th:if="${attraction.getContact()} == null"> <h5>Brak danych</h5></div>
+            <div th:unless="${attraction.getContact()} == null"><h5 th:text="${attraction.getContact()}"></h5></div>
+        </div>
+        <hr>
+    </div>
+    <div class="container center colored_background">
+        <h3>Zarządzanie plikami:</h3>
+        <div th:each="i:${imagies}">
+            <div class="card card-body">
+                <img src="${'/static/attractions/' + i.getPath()}" th:src="@{'/attractions/'+${i.getPath()}}">
             </div>
         </div>
+        <hr/>
+        <form class="requires-validation" th:action="@{/admin/attractions/{id}(id=${attraction.id})}"  method="post" enctype="multipart/form-data">
+            <div th:insert="Destination/SingleDestination::image_upload"/>
+        </form>
     </div>
-    <div th:each="i:${imagies}">
-        <div class="card card-body">
-            <img src="${'/static/attractions/' + i.getPath()}" th:src="@{'/attractions/'+${i.getPath()}}">
-        </div>
-    </div>
-    <form class="requires-validation" th:action="@{/admin/attractions/{id}(id=${attraction.id})}"  method="post" enctype="multipart/form-data">
-        <div th:insert="Destination/SingleDestination::image_upload"/>
-    </form>
 </body>
 </html>

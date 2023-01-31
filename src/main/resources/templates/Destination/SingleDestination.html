@@ -12,37 +12,39 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div>
+    <div class="row review-padding">
         <h1 th:text="${destination.getTown()}"></h1>
-        <h3 ><a th:href="@{'/admin/destinations/edit/' + ${destination.id}}">Edytuj</a></h3>
-        <h3 ><a th:href="@{'/admin/destinations/delete/' + ${destination.id}}">Usuń</a></h3>
+        <button class="btn btn-success"><a th:href="@{'/admin/destinations/edit/' + ${destination.id}}"><i class="bi bi-pencil"></i></a></button>
+        <button class="btn btn-success"><a th:href="@{'/admin/destinations/delete/' + ${destination.id}}"><i class="bi bi-trash"></i></a></button>
+    </div><hr>
+    <div class="container center colored_background">
+        <div class="row" >
+                <h5 th:text="'Położenie: ' + ${destination.getCountry()} + ', ' + ${destination.getContinent()}"></h5>
+            </div>
+        <div>
+            <h3>Opis: </h3>
+            <h5  th:text="${destination.getDescription()}"></h5>
+        </div>
     </div>
-    <div align="center" class="tab-content bg-transparent">
-        <div id="note-full-container" class="note-has-grid row">
-            <div class="card card-body" id="card">
-                <span class="side-stick"></span>
-                <p class=" font-12 text-muted" th:text="${destination.getCountry()} + ', ' + ${destination.getContinent()}"></p>
+    <div class="container center colored_background">
+        <div th:each="i:${imagies}">
+            <div class="card card-body">
+                <img src="${'/static/destinations/' + i.getPath()}" th:src="@{'/destinations/'+${i.getPath()}}">
+            </div>
+        </div>
+        <form class="requires-validation" th:action="@{/admin/destinations/{id}(id=${destination.id})}"  method="post" enctype="multipart/form-data">
+            <div th:fragment="image_upload" class="m-3">
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Dodaj zdjęcie: </label>
+                    <div class="col-8">
+                        <input type="file"name="image" accept="image/jpeg, image/png" class="form-control"/>
+                    </div>
+                </div>
                 <div>
-                    <p class=" font-12 text-muted" th:text="${destination.getDescription()}"></p>
+                    <button style="margin-left:220px;" type="submit" class="btn btn-success">Zatwierdź</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
-    <div th:each="i:${imagies}">
-        <div class="card card-body">
-            <img src="${'/static/destinations/' + i.getPath()}" th:src="@{'/destinations/'+${i.getPath()}}">
-        </div>
-    </div>
-    <form class="requires-validation" th:action="@{/admin/destinations/{id}(id=${destination.id})}"  method="post" enctype="multipart/form-data">
-        <div th:fragment="image_upload" class="m-3">
-            <div class="form-group row">
-                <label class="col-4 col-form-label">Dodaj zdjęcie: </label>
-                <div class="col-8">
-                    <input type="file"name="image" accept="image/jpeg, image/png" class="form-control"/>
-                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                </div>
-            </div>
-        </div>
-    </form>
 </body>
 </html>

@@ -34,11 +34,11 @@ public class Destination {
 
    // @OneToMany(mappedBy = "destination")
     //private Set<Image> images = new LinkedHashSet<>();
-
+/*
     @OneToMany(mappedBy = "destinationDestination")
     private Set<Application> applications = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "destinationDestination")
     private Set<Attraction> attractions = new LinkedHashSet<>();
-
+*/
 }

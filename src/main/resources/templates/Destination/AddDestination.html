@@ -12,50 +12,53 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center colored_background">
         <div>
-            <h3>Dodaj nowy kierunek podróży</h3>
+            <h3 class="title">Dodaj nowy kierunek podróży</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/destinations/add}" th:object="${destination}" method="post" enctype="multipart/form-data">
-            <div class="m-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Miejscowość: </label>
-                    <div class="col-8">
-                        <input th:field="*{town}" class="form-control" required/><span th:if="${#fields.hasErrors('town')}" th:errors="*{town}">Town Error</span>
+        <div class="container center">
+            <form align="center" class="requires-validation" th:action="@{/admin/destinations/add}" th:object="${destination}" method="post" enctype="multipart/form-data">
+                <div class="m-3">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Miejscowość: </label>
+                        <div class="col-12">
+                            <input th:field="*{town}" class="form-control" required/><span th:if="${#fields.hasErrors('town')}" th:errors="*{town}">Town Error</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kraj: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{country}" class="form-control" required/> <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country Error</span>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kraj: </label>
+                        <div class="col-12">
+                            <textarea th:field="*{country}" class="form-control" required/> <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country Error</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kontynent: </label>
-                    <div class="col-8">
-                        <select th:field="*{continent}" id="continentSelect" class="form-control">
-                            <option th:each="continent:${continents}" th:value="${continent}" th:text="${continent}"></option>
-                        </select>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kontynent: </label>
+                        <div class="col-12">
+                            <select th:field="*{continent}" id="continentSelect" class="form-control">
+                                <option th:each="continent:${continents}" th:value="${continent}" th:text="${continent}"></option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Opis: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Opis: </label>
+                        <div class="col-12">
+                            <textarea rows="10" th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                        </div>
                     </div>
+                    <div style="padding-left:140px; width:100%;">
+                        <div th:replace="Blog/AddPost::uploading"></div>
+                    </div>
+                    <div class="central">
+                        <button type="submit" class="btn btn-success">Dodaj</button>
+                    </div>
+                    <script th:replace="Blog/AddPost::images_preview">
+                    </script>
                 </div>
-                <div th:replace="Blog/AddPost::uploading">
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Dodaj</button>
-                </div>
-                <script th:replace="Blog/AddPost::images_preview">
-                </script>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>

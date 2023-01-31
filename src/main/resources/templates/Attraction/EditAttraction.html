@@ -12,57 +12,61 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center colored_background">
         <div>
-            <h3>Edytuj atrakcję</h3>
+            <h3 class="title">Edytuj atrakcję</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/attractions/save/{id}(id=${attractionId})}" th:object="${attraction}" method="post">
-            <div class="m-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Nazwa: </label>
-                    <div class="col-8">
-                        <input th:field="*{name}" class="form-control" required/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+        <div class="container central">
+            <form class="requires-validation center" th:action="@{/admin/attractions/save/{id}(id=${attractionId})}" th:object="${attraction}" method="post">
+                <div >
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Nazwa: </label>
+                        <div class="col-8">
+                            <input th:field="*{name}" class="form-control" required/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Opis: </label>
+                        <div class="col-8">
+                            <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kontakt: </label>
+                        <div class="col-8">
+                            <textarea th:field="*{contact}" class="form-control"/> <span th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}">Contact Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kategoria: </label>
+                        <div class="col-8">
+                            <select th:field="*{category}" id="categorySelect" class="form-control">
+                                <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Miejscowość: </label>
+                        <div class="col-8">
+                            <select th:field="*{destinationDestination}" class="form-control" required>
+                                <option th:each="destination:${destinations}" th:value="${destination.id}" th:text="|${destination.getTown()}, ${destination.getCountry()}|"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Cena: </label>
+                        <div class="col-8">
+                            <textarea th:field="*{price}" class="form-control" required/> <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
+                        </div>
+                    </div>
+                    <div class="central">
+                        <button type="submit" class="btn btn-success">Zatwierdź</button>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Opis: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kontakt: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{contact}" class="form-control"/> <span th:if="${#fields.hasErrors('contact')}" th:errors="*{contact}">Contact Error</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kategoria: </label>
-                    <div class="col-8">
-                        <select th:field="*{category}" id="categorySelect" class="form-control">
-                            <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Miejscowość: </label>
-                    <div class="col-8">
-                        <select th:field="*{destinationDestination}" class="form-control" required>
-                            <option th:each="destination:${destinations}" th:value="${destination.id}" th:text="|${destination.getTown()}, ${destination.getCountry()}|"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Cena: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{price}" class="form-control" required/> <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</span>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
+
     </div>
 </body>
 </html>

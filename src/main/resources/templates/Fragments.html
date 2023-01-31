@@ -17,8 +17,7 @@
             <li><a class="bordered-link" th:href="@{/admin/applications/}" sec:authorize="hasAuthority('ADMIN')">Aplikacje</a></li>
             <li><a class="bordered-link" th:href="@{/admin/facts/}" sec:authorize="hasAuthority('ADMIN')">Ciekawostki</a></li>
             <li><a class="bordered-link" th:href="@{/admin/tips/}" sec:authorize="hasAuthority('ADMIN')">Lista wskazówek</a></li>
-            <li><a class="bordered-link">Blog</a></li>
-            <li><a class="bordered-link">Polubione</a></li>
+            <li><a class="bordered-link" th:href="@{/blog/}">Blog</a></li>
         </ul>
         <ul class="navigationUser user-menu" sec:authorize="hasAuthority('ADMIN')">
                 <li><div sec:authorize="isAuthenticated()">

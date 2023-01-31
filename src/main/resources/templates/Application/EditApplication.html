@@ -12,46 +12,48 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center colored_background">
         <div>
-            <h3>Edytuj opis aplikacji</h3>
+            <h3 class="title">Edytuj opis aplikacji</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/applications/save/{id}(id=${applicationId})}" th:object="${appl}" method="post">
-            <div class="m-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Nazwa aplikacji: </label>
-                    <div class="col-8">
-                        <input th:field="*{appName}" class="form-control" required/><span th:if="${#fields.hasErrors('appName')}" th:errors="*{appName}">AppName Error</span>
+        <div class="container central">
+            <form class="requires-validation center" th:action="@{/admin/applications/save/{id}(id=${applicationId})}" th:object="${appl}" method="post">
+                <div class="m-3">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Nazwa aplikacji: </label>
+                        <div class="col-8">
+                            <input th:field="*{appName}" class="form-control" required/><span th:if="${#fields.hasErrors('appName')}" th:errors="*{appName}">AppName Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Opis: </label>
+                        <div class="col-8">
+                            <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kategoria: </label>
+                        <div class="col-8">
+                            <select th:field="*{category}" id="categorySelect" class="form-control">
+                                <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Miejscowość: </label>
+                        <div class="col-8">
+                            <select th:field="*{destinationDestination}" id="destinationSelect" class="form-control">
+                                <option th:value="NULL"></option>
+                                <option th:each="destination:${destinations}" th:value="${destination.id}" th:text="|${destination.getTown()}, ${destination.getCountry()}|"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="central">
+                        <button type="submit" class="btn btn-success">Zatwierdź</button>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Opis: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kategoria: </label>
-                    <div class="col-8">
-                        <select th:field="*{category}" id="categorySelect" class="form-control">
-                            <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Miejscowość: </label>
-                    <div class="col-8">
-                        <select th:field="*{destinationDestination}" id="destinationSelect" class="form-control">
-                            <option th:value="NULL"></option>
-                            <option th:each="destination:${destinations}" th:value="${destination.id}" th:text="|${destination.getTown()}, ${destination.getCountry()}|"></option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>

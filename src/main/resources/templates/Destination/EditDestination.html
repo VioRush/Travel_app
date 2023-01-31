@@ -12,44 +12,45 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center colored_background">
         <div>
-            <h3>Edytuj kierunek podróży</h3>
+            <h3 class="title">Edytuj kierunek podróży</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/destinations/save/{id}(id=${destinationId})}" th:object="${destination}" method="post">
-            <div class="m-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Miejscowość: </label>
-                    <div class="col-8">
-                        <input th:field="*{town}" class="form-control" required/><span th:if="${#fields.hasErrors('town')}" th:errors="*{town}">Town Error</span>
+        <div class="container center">
+            <form align="center" class="requires-validation center" th:action="@{/admin/destinations/save/{id}(id=${destinationId})}" th:object="${destination}" method="post">
+                <div class="m-3">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Miejscowość: </label>
+                        <div class="col-12">
+                            <input th:field="*{town}" class="form-control" required/><span th:if="${#fields.hasErrors('town')}" th:errors="*{town}">Town Error</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kraj: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{country}" class="form-control" required/> <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country Error</span>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kraj: </label>
+                        <div class="col-12">
+                            <textarea th:field="*{country}" class="form-control" required/> <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Country Error</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kontynent: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{continent}" class="form-control"/> <span th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}">Continent Error</span>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kontynent: </label>
+                        <div class="col-12">
+                            <textarea th:field="*{continent}" class="form-control"/> <span th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}">Continent Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Opis: </label>
+                        <div class="col-12">
+                            <textarea rows="10" th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
+                        </div>
+                    </div>
+                    <div class="central">
+                        <button type="submit" class="btn btn-success">Zatwierdź</button>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Opis: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{description}" class="form-control" required/> <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</span>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>

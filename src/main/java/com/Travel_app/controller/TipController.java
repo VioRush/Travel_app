@@ -76,13 +76,13 @@ public class TipController {
         return "Tip/EditTip";
     }
 
-    @PostMapping("/save/{id}")
+    @PostMapping("admin/tips/save/{id}")
     public String edit(@PathVariable("id") Long id, @ModelAttribute("tip") Tip tip) {
         tipService.updateTip(id, tip);
         return "redirect:/admin/tips/";
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("admin/tips/delete/{id}")
     public String deleteTip(@PathVariable("id") Long id) {
         tipService.deleteTip(id);
         return "redirect:/admin/tips/";

@@ -12,23 +12,18 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div>
-        <h1 th:text="${fact.getTitle()}"></h1>
+    <div contener>
+        <div class="row review-padding">
+            <h1 th:text="${fact.getTitle()}"></h1>
+            <button class="btn btn-success"><a th:href="@{'/admin/facts/edit/' + ${fact.id}}"><i class="bi bi-pencil"></i></a></button>
+            <button class="btn btn-success"><a th:href="@{'/admin/facts/delete/' + ${fact.id}}"><i class="bi bi-trash"></i></a></button>
+        </div><hr>
     </div>
-    <div align="center" class="tab-content bg-transparent">
-        <div id="note-full-container" class="note-has-grid row">
-            <div class="card card-body" id="card">
-                <span class="side-stick"></span>
-                <div>
-                    <p class=" font-12 text-muted" th:text="${fact.getContent()}"></p>
-                </div>
-            </div>
+    <div class="container center colored_background">
+        <div>
+            <h3>Treść:</h3>
+            <h5 class=" font-12" th:text="${fact.getContent()}"></h5>
         </div>
-    </div>
-    </div>
-    <div>
-        <h3 ><a th:href="@{'/admin/facts/edit/' + ${fact.id}}">Edytuj</a></h3>
-        <h3 ><a th:href="@{'/admin/facts/delete/' + ${fact.id}}">Usuń</a></h3>
     </div>
 </body>
 </html>

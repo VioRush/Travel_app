@@ -12,38 +12,39 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container text-center">
+    <div class="container center colored_background">
         <div>
-            <h3>Edytuj wskazówkę</h3>
+            <h3 class="title">Edytuj wskazówkę</h3>
         </div>
-        <form class="requires-validation" th:action="@{/admin/tips/save/{id}(id=${tipId})}" th:object="${tip}" method="post">
-            <div class="m-3">
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Tytuł wskazówki: </label>
-                    <div class="col-8">
-                        <input th:field="*{title}" class="form-control" required/><span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+        <div class="container center">
+            <form class="requires-validation" th:action="@{/admin/tips/save/{id}(id=${tipId})}" th:object="${tip}" method="post">
+                <div class="m-3">
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Tytuł wskazówki: </label>
+                        <div class="col-12">
+                            <input th:field="*{title}" class="form-control" required/><span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Treść: </label>
+                        <div class="col-12">
+                            <textarea rows="5" th:field="*{content}" class="form-control" required/> <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Kategoria: </label>
+                        <div class="col-12">
+                            <select th:field="*{category}" id="categorySelect" class="form-control">
+                                <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="central">
+                        <button type="submit" class="btn btn-success">Zatwierdź</button>
                     </div>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Treść: </label>
-                    <div class="col-8">
-                        <textarea th:field="*{content}" class="form-control" required/> <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-4 col-form-label">Kategoria: </label>
-                    <div class="col-8">
-                        <select th:field="*{category}" id="categorySelect" class="form-control">
-                            <option th:each="category:${categories}" th:value="${category}" th:text="${category}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="btn btn-primary">Zatwierdź</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </body>
 </html>

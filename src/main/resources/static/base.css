@@ -329,7 +329,7 @@ form{
     color: #18241Cff !important;
 }
 
-.review{
+.review, .review-padding{
     display:flex;
     flex-direction: row !important;
     padding-left:16px;
@@ -337,6 +337,15 @@ form{
     align-items: baseline;
     flex-wrap: nowrap;
     align-content: flex-start;
+}
+
+.review-padding h1, .review-padding button{
+     margin-right: 5px;
+     margin-bottom:0px;
+}
+
+.review-padding h1{
+    margin-top: 10px;
 }
 
 .text-link, .title{
@@ -482,6 +491,7 @@ form.column{
 
 .form-group{
     justify-content: flex-start;
+
 }
  legend{
     font-family: "Montserrat", sans-serif;
@@ -637,5 +647,14 @@ input[type="search"]{
 .more h2{
     color: var(--sand) !important;
     text-align: center;
+}
+
+.central{
+    margin-left: 45%;
+    margin-top: 20px;
+}
+
+form.center{
+    padding-left: 20%;
 }
 
