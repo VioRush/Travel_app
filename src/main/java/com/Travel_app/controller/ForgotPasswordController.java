@@ -57,7 +57,7 @@ public class ForgotPasswordController {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
-        helper.setFrom("","Pomoc techniczna");
+        helper.setFrom("theworldbeyondthewalls.sup@gmail.com","Pomoc techniczna");
         helper.setTo(recipientEmail);
 
         String subject = "Link do odzyskania hasła";
@@ -82,7 +82,7 @@ public class ForgotPasswordController {
         model.addAttribute("token", token);
         if(user == null){
             model.addAttribute("message", "Podano niepoprawny link");
-            return "message";
+            return "Login";
         }
         return "ResetPassword";
     }
@@ -96,12 +96,12 @@ public class ForgotPasswordController {
 
         if(user == null){
             model.addAttribute("message", "Niepoprawny link odzyskiwania hasła");
-            return "message";
+            return "Login";
         }
         else{
             userService.updatePassword(user, password);
             model.addAttribute("message", "Udana zmiana hasła.");
         }
-        return "message";
+        return "Login";
     }
 }

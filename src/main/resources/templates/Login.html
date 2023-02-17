@@ -16,6 +16,9 @@
             </div>
             <div>
                 <form class="column" th:action="@{/login}" method="post">
+                    <div th:if="${message != null}" class="group">
+                        [[${message}]]
+                    </div>
                     <div class="group">
                         <input type="text" name="username" placeholder="Login"/>
                     </div>

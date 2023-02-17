@@ -209,7 +209,6 @@ public class AppController {
                 images.add(im.listIterator().next());
             }
         }
-        System.out.println("Fotok:       " + images.size());
         model.addAttribute("top", top);
         model.addAttribute("images", images);
         model.addAttribute("categories", continents);
