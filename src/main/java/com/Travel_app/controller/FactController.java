@@ -56,7 +56,7 @@ public class FactController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("fact") Fact fact, /*Errors*/ BindingResult result, ModelMap model) {
+    public String edit(@PathVariable("id") Long id, @Valid @ModelAttribute("fact") Fact fact, /*Errors*/ BindingResult result, ModelMap model) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
             model.addAttribute("factId", id);

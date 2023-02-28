@@ -68,10 +68,11 @@ public class DestinationController {
     }
 
     @PostMapping("/add")
-    public String addDestination(@Valid @ModelAttribute("destination") Destination destination,  /*Errors*/ BindingResult result, @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
+    public String addDestination(@Valid @ModelAttribute("destination") Destination destination,  /*Errors*/ BindingResult result, @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request, ModelMap model) throws IOException {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
-            return "redirect:/admin/destinations/add";
+            model.addAttribute("continents", continents);
+            return "Destination/AddDestination";
         }
 
         destinationService.addDestination(destination);
@@ -99,7 +100,7 @@ public class DestinationController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("destination") Destination destination, /*Errors*/ BindingResult result, ModelMap model) {
+    public String edit(@PathVariable("id") Long id, @Valid @ModelAttribute("destination") Destination destination, /*Errors*/ BindingResult result, ModelMap model) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
             model.addAttribute("destinationId", id);

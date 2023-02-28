@@ -17,7 +17,7 @@
             <h3 class="title">Edytuj kierunek podróży</h3>
         </div>
         <div class="container center">
-            <form align="center" class="requires-validation center" th:action="@{/admin/destinations/save/{id}(id=${destinationId})}" th:object="${destination}" method="post">
+            <form align="center" class="requires-validation center" th:action="@{/admin/destinations/edit/{id}(id=${destinationId})}" th:object="${destination}" method="post">
                 <div class="m-3">
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Miejscowość: </label>

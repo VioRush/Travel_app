@@ -38,7 +38,7 @@
                 <td th:text="${appl.category}">Kategoria</td>
                 <td th:if="${appl.getDestinationDestination() != null}" th:text="${appl.destinationDestination.getTown()} + ',' + ${appl.destinationDestination.getCountry()} + ',' + ${appl.destinationDestination.getContinent()}">Miejscowość</td>
                 <td th:unless="${appl.getDestinationDestination() != null}" th:text="${appl.destinationDestination}">Miejscowość</td>
-                <td><a th:href="@{${appl.id}}">Więcej...</a></td>
+                <td><a class="dark" th:href="@{${appl.id}}">Więcej...</a></td>
 
             </tr>
             </tbody>

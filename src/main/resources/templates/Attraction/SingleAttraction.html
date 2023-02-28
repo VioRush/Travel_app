@@ -15,8 +15,8 @@
     <div contener>
         <div class="row review-padding">
             <h1 th:text="${attraction.getName()}"></h1>
-            <button class="btn btn-success"><a class="dark" th:href="@{'/admin/attractions/edit/' + ${attraction.getId()}}"><i class="bi bi-pencil"></i></a></button>
-            <button class="btn btn-success"> <a class="dark" th:href="@{'/admin/attractions/delete/' + ${attraction.getId()}}"><i class="bi bi-trash"></i></a> </button>
+            <button class="btn btn-success"><a th:href="@{'/admin/attractions/edit/' + ${attraction.getId()}}"><i class="bi bi-pencil"></i></a></button>
+            <button class="btn btn-success"> <a th:href="@{'/admin/attractions/delete/' + ${attraction.getId()}}"><i class="bi bi-trash"></i></a> </button>
         </div><hr>
     </div>
     <div class="container center colored_background">

@@ -17,7 +17,7 @@
             <h3 class="title">Edytuj opis aplikacji</h3>
         </div>
         <div class="container central">
-            <form class="requires-validation center" th:action="@{/admin/applications/save/{id}(id=${applicationId})}" th:object="${appl}" method="post">
+            <form class="requires-validation center" th:action="@{/admin/applications/edit/{id}(id=${applicationId})}" th:object="${appl}" method="post">
                 <div class="m-3">
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Nazwa aplikacji: </label>

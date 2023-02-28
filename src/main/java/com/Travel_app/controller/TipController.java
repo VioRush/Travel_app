@@ -65,8 +65,6 @@ public class TipController {
         }
 
         tipService.addTip(tip);
-        //model.addAttribute("newinformation", information);
-
         return "redirect:/admin/tips/";
     }
 

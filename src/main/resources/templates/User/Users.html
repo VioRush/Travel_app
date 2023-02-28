@@ -39,7 +39,7 @@
             <td th:text="${user.name}">Imię</td>
             <td th:text="${user.surname}">Nazwisko</td>
             <td th:text="${user.about}">Wizytówka</td>
-            <td><a th:href="@{'/admin/users/delete/' + ${user.id}}">Usuń</a></td>
+            <td><a class="dark" th:href="@{'/admin/users/delete/' + ${user.id}}">Usuń</a></td>
 
         </tr>
         </tbody>

@@ -66,7 +66,9 @@ public class ApplicationController {
     public String addApplication(@Valid @ModelAttribute("appl") Application application, /*Errors*/ BindingResult result, HttpServletRequest request, ModelMap model) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
-            return "redirect:/admin/applications/add"; //"Application/AddApplication";
+            model.addAttribute("destinations", this.destinationService.findAll());
+            model.addAttribute("categories", categories);
+            return "Application/AddApplication";
         }
         applicationService.addApplication(application);
 
@@ -83,7 +85,7 @@ public class ApplicationController {
     }
 
     @PostMapping("admin/applications/edit/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("application") Application application, /*Errors*/ BindingResult result, ModelMap model) {
+    public String edit(@PathVariable("id") Long id,@Valid @ModelAttribute("appl") Application application, /*Errors*/ BindingResult result, ModelMap model) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
             model.addAttribute("applicationId", id);
