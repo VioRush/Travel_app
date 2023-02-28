@@ -64,7 +64,7 @@ public class ForgotPasswordController {
 
         String content = "<p>Witaj, </p>"
                 + "<p>Kliknij poniższy link, aby zmienić hasło do swojego konta: </p>"
-                + "<p><a href=\"" + link + "\">Zmiania hasła</a></p>"
+                + "<p><a href=\"" + link + "\">Zmiana hasła</a></p>"
                 + "<br>"
                 + "Jeżeli nie wybrałeś opcji przypomnienia hasła w naszym serwisie, uprzejmie prosimy o zignorowanie tej wiadomości email. </p>"
                 + "<br>"

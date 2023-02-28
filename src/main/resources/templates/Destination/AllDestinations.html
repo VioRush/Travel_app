@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Destinations</title>
+    <title th:text="${country}"></title>
     <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
@@ -12,11 +12,11 @@
 <header th:replace="Fragments::Admin_menu">
 </header>
 <body>
-    <div class="container full-width">
+    <div class="container center full-width">
         <h2 class="title" th:text="'Odkryj nowy kierunek: ' + ${country}"></h2><hr/>
         <div class="div-transform">
             <div th:each="destination:${destinations}">
-                <div class="card card-medium colored_background">
+                <div class="card card-medium card-white colored_background">
                     <div th:each="im:${images}">
                         <img class="image image-medium" th:if="${im.getDestination().getId()} == ${destination.getId()}" src="${'/static/destinations/' + im.getPath()}" th:src="@{'/destinations/'+${im.getPath()}}">
                     </div>

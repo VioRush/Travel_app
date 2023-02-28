@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Rejestracja</title>
     <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
@@ -16,35 +16,41 @@
                 <a class="text-link-dark" th:href="@{/register}"><button class="text-button" disabled>Rejestracja</button></a>
             </div>
             <div>
-                <form class="column" th:action="@{/post_register}" th:object="${user}"
+                <form class="column" th:action="@{/register}" th:object="${user}"
                       method="post">
                     <div class="group">
-                        <input placeholder="Nazwa użytkownika" th:field="*{username}" class="form-control" required /><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                        <input placeholder="Nazwa użytkownika" th:field="*{username}" class="form-control" required />
                     </div>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
+                    <div class="group">
+                        <input placeholder="Login" th:field="*{login}" class="form-control"/>
+                    </div>
+                    <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</span>
 
                     <div class="group">
-                        <input placeholder="Login" th:field="*{login}" class="form-control"/><span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login Error</span>
+                        <input placeholder="Hasło" type="password" th:field="*{password}" class="form-control"/>
                     </div>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
 
                     <div class="group">
-                        <input placeholder="Hasło" type="password" th:field="*{password}" class="form-control"/><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</span>
+                        <input placeholder="Email" type="email" th:field="*{email}" class="form-control"/>
                     </div>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
 
                     <div class="group">
-                        <input placeholder="Email" type="email" th:field="*{email}" class="form-control"/><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+                        <input placeholder="Imię" th:field="*{name}" class="form-control"/>
                     </div>
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
 
                     <div class="group">
-                        <input placeholder="Imię" th:field="*{name}" class="form-control"/><span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
+                        <input placeholder="Nazwisko" th:field="*{surname}" class="form-control" />
                     </div>
+                    <span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</span>
 
                     <div class="group">
-                        <input placeholder="Nazwisko" th:field="*{surname}" class="form-control" /><span th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</span>
+                        <input placeholder="O tobie..." th:field="*{about}" class="form-control"/>
                     </div>
-
-                    <div class="group">
-                        <input placeholder="O tobie..." th:field="*{about}" class="form-control"/><span th:if="${#fields.hasErrors('about')}" th:errors="*{about}">About Error</span>
-                    </div>
+                    <span th:if="${#fields.hasErrors('about')}" th:errors="*{about}">About Error</span>
 
                     <div class="group">
                         <button type="submit">Zarejestruj się</button>

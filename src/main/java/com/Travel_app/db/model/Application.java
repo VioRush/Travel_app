@@ -25,8 +25,6 @@ public class Application {
     @Column(name = "description", nullable = false, length = 500)
     private String description;
 
-    @Size(max=30, message = "Maksymalna długość nazwy kategorii - 30 liter.")
-    @NotBlank(message = "Pole musi być uzupełnione")
     @Column(name = "category", nullable = false, length = 30)
     private String category;
 

@@ -48,9 +48,12 @@
             <div th:if="!${comments.isEmpty()}" th:each="comment:${comments}">
                 <div class="card card-comment">
                     <div class="row">
-                        <div th:each="im:${profile_images}">
+                        <div th:if="!${profile_images.isEmpty()}" th:each="im:${profile_images}">
                             <img class="image" th:if="${im.getUser().getId()} == ${comment.getUserUser().getId()}" src="${'/static/' + im.getPath()}" th:src="@{'/' + ${im.getPath()}}">
                             <img th:unless="${im.getUser().getId()} == ${comment.getUserUser().getId()}" class="image" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
+                        </div>
+                        <div th:unless="!${profile_images.isEmpty()}">
+                            <img class="image" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
                         </div>
                         <div>
                             <h4 th:text="${comment.getUserUser().getUsername()}"></h4>

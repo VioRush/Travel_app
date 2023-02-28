@@ -17,7 +17,7 @@
             <h3 class="title">Edytuj wskazówkę</h3>
         </div>
         <div class="container center">
-            <form class="requires-validation" th:action="@{/admin/tips/save/{id}(id=${tipId})}" th:object="${tip}" method="post">
+            <form class="requires-validation" th:action="@{/admin/tips/edit/{id}(id=${tipId})}" th:object="${tip}" method="post">
                 <div class="m-3">
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Tytuł wskazówki: </label>

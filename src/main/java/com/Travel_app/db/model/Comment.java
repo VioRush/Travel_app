@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 
 @Data
@@ -16,6 +17,7 @@ public class Comment {
     private Long id;
 
     @NotBlank(message = "Pole musi być uzupełnione")
+    @Size(max=100, message = "Maksymalna długość komentarza - 100 znaków.")
     @Column(name = "body", nullable = false, length = 100)
     private String body;
 

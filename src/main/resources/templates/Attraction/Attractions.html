@@ -25,7 +25,6 @@
                     <th>Nazwa</th>
                     <th>Opis</th>
                     <th>Cena</th>
-                    <th>Opinia</th>
                     <th>Kategoria</th>
                     <th>Kontakt</th>
                     <th>Miejscowość</th>
@@ -38,11 +37,10 @@
                     <td th:text="${attraction.name}">Nazwa</td>
                     <td th:text="${attraction.description}">Opis</td>
                     <td th:text="${attraction.price}">Cena</td>
-                    <td th:text="${attraction.review}">Opinia</td>
                     <td th:text="${attraction.category}">Kategoria</td>
                     <td th:text="${attraction.contact}">Kontakt</td>
                     <td th:text="|${attraction.destinationDestination.town}, ${attraction.destinationDestination.country}|">Miejscowość</td>
-                    <td><a th:href="@{${attraction.id}}">Więcej...</a></td>
+                    <td><a class="dark" th:href="@{${attraction.id}}">Więcej...</a></td>
                 </tr>
                 </tbody>
             </table>

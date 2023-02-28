@@ -5,6 +5,7 @@ import com.Travel_app.service.FactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,6 @@ public class FactController {
         }
 
         factService.addFact(fact);
-        //model.addAttribute("newinformation", information);
 
         return "redirect:/admin/facts/";
     }
@@ -55,8 +55,13 @@ public class FactController {
         return "Fact/EditFact";
     }
 
-    @PostMapping("/save/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("fact") Fact fact) {
+    @PostMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, @ModelAttribute("fact") Fact fact, /*Errors*/ BindingResult result, ModelMap model) {
+        if(result.hasErrors()){
+            result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("factId", id);
+            return "Fact/EditFact";
+        }
         factService.updateFact(id, fact);
         return "redirect:/admin/facts/";
     }

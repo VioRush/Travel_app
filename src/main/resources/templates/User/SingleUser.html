@@ -24,10 +24,10 @@
                         <img th:unless="${image != null}" class="profile_img" src="../static/user-photos/logo.png" th:src="@{/user-photos/logo.png}"/>
                         <div class="col-4" text-align="center" style="margin-top: 60px"><h1 class=" font-12" th:text="${user.getUsername()}"></h1></div>
                     </div>
-                    <div class="col-24"><a th:href="@{'/users/edit/' + ${user.id}}"><h3 style="text-align:right" >Edytuj</h3></a></div>
+                    <div class="col-24"><a class="dark" th:href="@{'/users/edit/' + ${user.id}}"><h3 style="text-align:right" >Edytuj</h3></a></div>
 
+                    <legend>Dane osobowe</legend><hr/>
                     <fieldset>
-                        <legend>Dane osobowe</legend>
                         <p style="margin-top: 30px">
                             <div>
                             <label class="label">Login</label>
@@ -40,15 +40,16 @@
 
                         </p>
                     </fieldset>
+                    <legend>Kontakt</legend><hr/>
                     <fieldset>
-                        <legend>Kontakt</legend>
                         <p style="margin-top: 30px">
                             <label class="label">Email:</label>
                         <h5  th:text="${user.getEmail()}"></h5><br/>
                         </p>
                     </fieldset>
+                    <legend>O mnie</legend><hr/>
                     <fieldset>
-                        <legend>O mnie</legend>
+
                         <p style="margin-top: 30px">
                             <label class="label">O mnie:</label>
                         <h3 th:text="${user.getAbout()}"></h3><br/>

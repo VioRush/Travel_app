@@ -250,7 +250,7 @@ form{
 }
 
 .fact-body, .colored_background, .card-category{
-    background: #ffffff66 !important;
+    background: #ffffffad !important;
 }
 
 .card-category{
@@ -291,15 +291,27 @@ form{
     align-items: center;
 }
 
-.image_row, .flex-row{
+.image_row, .flex-row, .list{
     display:flex;
     flex-direction: row;
     padding:20px 0px 20px 20px;
     width: 1900px;
 }
 
- .categories, .row-categories{   /*flex-row,*/
+.list{
+    padding-left: 0px;
+    flex-wrap: wrap;
+    align-items: stretch;
+    align-content: stretch;
     justify-content: center;
+}
+
+.list div{
+    margin-bottom: 15px;
+}
+
+ .categories, .row-categories{   /*flex-row,*/
+    justify-content: center !important;
      align-items: stretch;
      margin-bottom: 50px !important;
 }
@@ -485,8 +497,9 @@ form.column{
     background: #deede3;/* #f2f6f8*/
     line-height: 1.6em;
     align:center;
-    margin-top: 10em;
+    margin-bottom: 15px !important;
     border-radius:5px;
+    padding-left: 5px !important;
  }
 
 .form-group{
@@ -499,6 +512,7 @@ form.column{
     margin-left:50px;
     font-size: 28px;
     font: italic;
+    margin-bottom:0px !important;
  }
 
  .label{
@@ -597,12 +611,12 @@ input[type="search"]{
 
 .menu{
     /*width: 90%;*/
-    margin: 0px 5px 0px 25px !important;
+    margin: 0px 5px 20px 25px !important;
     justify-content: flex-start;
 }
 
 .menu a{
-    padding-left: 20px;;
+    padding-left: 20px;
 }
 
 .coloured{
@@ -638,7 +652,7 @@ input[type="search"]{
 }
 
 .more{
-    background-color: white;
+    background-color: transparent !important;
     margin-top:10px;
     padding-top: 14px;
     width: 190px;

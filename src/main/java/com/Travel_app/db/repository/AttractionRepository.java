@@ -13,6 +13,6 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
     @Query("select a from Attraction a where a.destinationDestination.id = ?1 and a.category = ?2")
     List<Attraction> findAllByDestinationAndCategory(Long id, String category);
 
-    @Query(value = "select * from Attraction a where lower(a.name) like concat('%',lower(:keyword),'%')", nativeQuery = true)
+    @Query(value = "select * from Attraction a where lower(a.name) like concat('%',lower(:keyword),'%') or lower(a.description) like concat('%',lower(:keyword),'%')", nativeQuery = true)
     List<Attraction> findAllByKeyword(String keyword);
 }

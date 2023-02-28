@@ -36,7 +36,9 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label">Kontynent: </label>
                         <div class="col-12">
-                            <textarea th:field="*{continent}" class="form-control"/> <span th:if="${#fields.hasErrors('continent')}" th:errors="*{continent}">Continent Error</span>
+                            <select th:field="*{continent}" id="continentSelect" class="form-control">
+                                <option th:each="continent:${continents}" th:value="${continent}" th:text="${continent}"></option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

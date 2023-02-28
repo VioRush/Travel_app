@@ -31,9 +31,6 @@ public class Post {
     @Column(name = "publish", nullable = false)
     private Instant publish;
 
-    @Column(name = "status", length = 10)
-    private String status;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "post_user_id", nullable = false)
     private User postUser;

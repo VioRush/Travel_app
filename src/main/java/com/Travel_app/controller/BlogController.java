@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -67,7 +68,6 @@ public class BlogController {
     @GetMapping("/add")
     public String addPost(Model model){
         model.addAttribute("post", new Post());
-        //model.addAttribute("imagesToAdd", new ArrayList<MultipartFile>());
         return "Blog/AddPost";
     }
 
@@ -79,7 +79,6 @@ public class BlogController {
         }
         User user = this.userService.findByLogin(request.getUserPrincipal().getName());
         post.setPostUser(user);
-        System.out.println(Instant.now());
         post.setPublish(Instant.now());
         blogService.addPost(post);
 
@@ -95,8 +94,6 @@ public class BlogController {
                 FileUploadUtil.saveFile("C:/Users/Asus/Desktop/Semestr 7/Dyplom/Travel_app/src/main/resources/static/blog/", temp + filename, multipartFile);
             }
         }
-        //Date.from(post.getPublish());
-        //model.addAttribute("newinformation", information);
 
         return "redirect:/blog/myPosts".concat("?message=success");// "Blog/MyPosts";
     }
@@ -115,15 +112,15 @@ public class BlogController {
     public String getPost(@PathVariable Long id, Model model, HttpServletRequest request){
         List<Comment> comments = blogService.getCommentsByPost(id);
         List<File> profile_images = new ArrayList<>();
-        System.out.println(request.getUserPrincipal() == null);
         if(request.getUserPrincipal() != null){
             User user = this.userService.findByLogin(request.getUserPrincipal().getName());
             File profile_image = (File) fileService.findByUser(user.getId());
             model.addAttribute("profile_image", profile_image);
         }
+
         for(Comment c: comments){
-            //c.getUserUser().
-            profile_images.add((File) fileService.findByUser(c.getUserUser().getId()));
+            File f = (File) fileService.findByUser(c.getUserUser().getId());
+            if (f != null) profile_images.add(f);
         }
         model.addAttribute("post", blogService.getPostById(id));
         model.addAttribute("comments", comments);
@@ -158,14 +155,17 @@ public class BlogController {
     }
 
     @PostMapping("/posts/save/{id}")
-    public String editPost(@PathVariable Long id, @Valid @ModelAttribute("post") Post post,/*Errors*/ BindingResult result,Model model, @RequestParam("upload_images") MultipartFile[] multipartFiles, @RequestParam("toDelete") Long toDelete, HttpServletRequest request) throws IOException {  // @ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
+    public String editPost(@PathVariable Long id, @Valid @ModelAttribute("post") Post post,/*Errors*/ BindingResult result, ModelMap model, @RequestParam(value = "upload_images") MultipartFile[] multipartFiles, @RequestParam(value="toDelete",required = false) Long toDelete, HttpServletRequest request) throws IOException {  // @ModelAttribute("imagesToAdd") ArrayList<MultipartFile> imagesToAdd,
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("postId", id);
+            List<File> images = fileService.findByPost(id);
+            model.addAttribute("images", images);
+            model.addAttribute("toDelete", new Integer[images.size()]);
             return "Blog/EditPost";
         }
         blogService.updatePost(id, post);
-        System.out.println(toDelete);
-        fileService.deleteImageById(toDelete);
+        if(toDelete != null) fileService.deleteImageById(toDelete);
         for(MultipartFile multipartFile: multipartFiles){
             String filename = StringUtils.cleanPath(multipartFile.getOriginalFilename());
             if(!filename.isEmpty()){

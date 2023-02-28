@@ -177,7 +177,7 @@ public class AppController {
         return "SignUp";
     }
 
-    @PostMapping("/post_register")
+    @PostMapping("/register")
     public String processRegister(@Valid @ModelAttribute("user") User user, /*Errors*/ BindingResult result) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));

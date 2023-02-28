@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>TravelApp</title>
+    <title>The world beyond the walls</title>
     <link rel="stylesheet" type="text/css" th:href="@{/base.css}"/>
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"/>
@@ -52,13 +52,13 @@
                            <a class="text-link-dark" th:href="@{'/destinations/' + ${destination.getCountry()} + '/details/' + ${destination.getId()}}"><h2 th:text="${destination.getTown()}"></h2></a>
                        </div>
                    </div>
-                   <div th:if="!${attractions.isEmpty()}">
+                   <div th:if="!${attractions.isEmpty()}" class="padding">
                        <h3> Atrakcje </h3><hr/>
                        <div class="card-white" th:each="attraction:${attractions}">
                            <a class="text-link-dark" th:href="@{'/attractions/details/' + ${attraction.getId()}}"><h2 th:text="${attraction.getName()}"></h2></a>
                        </div>
                    </div>
-                   <div th:if="!${tips.isEmpty()}">
+                   <div th:if="!${tips.isEmpty()}" class="padding">
                        <h3> Wskazówki </h3><hr/>
                        <div class="card-white" th:each="tip:${tips}">
                            <a class="text-link-dark" th:href="@{'/}"><h2 th:text="${tip.getTitle()}"></h2></a>
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div>
-                <div class="card card-white more colored_background">
+                <div class="card more">
                     <a th:href="@{/rankings/}"><h2>Więcej...</h2> </a>
                 </div>
             </div>

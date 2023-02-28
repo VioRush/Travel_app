@@ -6,6 +6,7 @@ import com.Travel_app.service.TipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,9 +57,10 @@ public class TipController {
     }
 
     @PostMapping("admin/tips/add")
-    public String addInformation(@Valid @ModelAttribute("tip") Tip tip, /*Errors*/ BindingResult result, HttpServletRequest request) {
+    public String addInformation(@Valid @ModelAttribute("tip") Tip tip, /*Errors*/ BindingResult result, HttpServletRequest request, ModelMap model) {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("categories", categories);
             return "Tip/AddTip";
         }
 
@@ -76,8 +78,14 @@ public class TipController {
         return "Tip/EditTip";
     }
 
-    @PostMapping("admin/tips/save/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("tip") Tip tip) {
+    @PostMapping("admin/tips/edit/{id}")
+    public String edit(@PathVariable("id") Long id, @Valid @ModelAttribute("tip") Tip tip, /*Errors*/ BindingResult result, ModelMap model) {
+        if(result.hasErrors()){
+            result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("tipId", id);
+            model.addAttribute("categories", categories);
+            return "Tip/EditTip";
+        }
         tipService.updateTip(id, tip);
         return "redirect:/admin/tips/";
     }

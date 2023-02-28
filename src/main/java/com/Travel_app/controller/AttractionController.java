@@ -9,6 +9,7 @@ import com.Travel_app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -71,12 +72,13 @@ public class AttractionController {
     }
 
     @PostMapping("/add")
-    public String addAttraction(@Valid @ModelAttribute("attraction") Attraction attraction, /*Errors*/ BindingResult result,  @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request) throws IOException {
+    public String addAttraction(@Valid @ModelAttribute("attraction") Attraction attraction, /*Errors*/ BindingResult result,  @RequestParam("upload_images") MultipartFile[] multipartFiles, HttpServletRequest request, ModelMap model) throws IOException {
         if(result.hasErrors()){
             result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("destinations", this.destinationService.findAll());
+            model.addAttribute("categories", categories);
             return "Attraction/AddAttraction";
         }
-        attraction.setReview(0);
         attractionService.addAttraction(attraction);
 
         for(MultipartFile multipartFile: multipartFiles){
@@ -104,8 +106,15 @@ public class AttractionController {
         return "Attraction/EditAttraction";
     }
 
-    @PostMapping("/save/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("attraction") Attraction attraction) {
+    @PostMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, @Valid @ModelAttribute("attraction") Attraction attraction, /*Errors*/ BindingResult result, ModelMap model) {
+        if(result.hasErrors()){
+            result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("destinations", this.destinationService.findAll());
+            model.addAttribute("categories", categories);
+            model.addAttribute("attractionId", id);
+            return "Attraction/EditAttraction";
+        }
         attractionService.updateAttraction(id, attraction);
         return "redirect:/admin/attractions/";
     }

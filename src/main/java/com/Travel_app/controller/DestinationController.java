@@ -8,6 +8,7 @@ import com.Travel_app.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class DestinationController {
     @Autowired
     FileService fileService;
 
-    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia", "Azja", "Europa"}));
+    ArrayList<String> continents = new ArrayList<String>(Arrays.asList(new String[]{"Afryka", "Ameryka Południowa", "Ameryka Północna", "Antarktyda", "Australia i Oceania", "Azja", "Bliski Wschód", "Europa"}));
 
 
     @GetMapping("/")
@@ -93,11 +94,18 @@ public class DestinationController {
     public String editDestination(@PathVariable("id") Long id, Model model) {
         model.addAttribute("destination", this.destinationService.getById(id));
         model.addAttribute("destinationId", id);
+        model.addAttribute("continents", continents);
         return "Destination/EditDestination";
     }
 
-    @PostMapping("/save/{id}")
-    public String edit(@PathVariable("id") Long id, @ModelAttribute("destination") Destination destination) {
+    @PostMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, @ModelAttribute("destination") Destination destination, /*Errors*/ BindingResult result, ModelMap model) {
+        if(result.hasErrors()){
+            result.getAllErrors().forEach(el -> System.out.println(el));
+            model.addAttribute("destinationId", id);
+            model.addAttribute("continents", continents);
+            return "Destination/EditDestination";
+        }
         destinationService.updateDestination(id, destination);
         return "redirect:/admin/destinations/";
     }

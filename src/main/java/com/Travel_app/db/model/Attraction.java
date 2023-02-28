@@ -28,17 +28,16 @@ public class Attraction {
     private String description;
 
     @NotBlank(message = "Pole musi być uzupełnione")
-    @Column(name = "price", nullable = false)
+    @Size(max=20, message = "Maksymalna długość ceny - 20 znaków.")
+    @Column(name = "price", nullable = false, length = 20)
     private String price;
-
-    @Column(name = "review", nullable = false)
-    private Integer review;
 
     @NotBlank(message = "Pole musi być uzupełnione")
     @Column(name = "category", nullable = false, length = 30)
     private String category;
 
     @Column(name = "contact", length = 100)
+    @Size(max=100, message = "Maksymalna długość - 100 znaków.")
     private String contact;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
